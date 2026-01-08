@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MONACOE | Prestige Curator</title>
+    <title>|PRESTIGE CURATOR|</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,700&family=Inter:wght@100;300;600&display=swap" rel="stylesheet">
@@ -17,21 +17,18 @@
             overflow-x: hidden; 
             scroll-behavior: smooth; 
         }
-        h1, h2, .serif { font-family: 'Bodoni Moda', serif; }
+        h1, h2, h3, h4, .serif { font-family: 'Bodoni Moda', serif; }
 
-        /* Floating car fix */
+        /* Floating Interactive Element */
         #floating-car {
-            position: fixed; 
-            top: 0; left: 0;
-            width: 450px; 
-            z-index: 10; 
-            pointer-events: none;
-            opacity: 0.12; 
-            filter: grayscale(100%) brightness(1.2);
-            transition: transform 0.1s linear; /* Smoother tracking */
+            position: fixed; top: 0; left: 0; width: 450px; 
+            z-index: 5; pointer-events: none;
+            opacity: 0.12; filter: grayscale(100%) brightness(1.2);
+            transition: transform 0.1s linear;
             display: none; 
         }
 
+        /* Cinematic Entry Overlay */
         #enter-overlay {
             position: fixed; inset: 0; background: #000; z-index: 9999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -39,15 +36,16 @@
         }
 
         .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-        .video-bg video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.25) contrast(1.1); }
+        .video-bg video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.2) contrast(1.2); }
 
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        /* Scroll Reveal System */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .glass-card { 
             background: rgba(255, 255, 255, 0.01); 
             border: 1px solid rgba(255, 255, 255, 0.04); 
-            transition: 0.8s ease; 
+            transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
         }
         .glass-card:hover { border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.03); }
         
@@ -59,16 +57,16 @@
     <img id="floating-car" src="https://pngimg.com/d/porsche_PNG10620.png" alt="Prestige Overlay">
 
     <div id="enter-overlay">
-        <div class="text-[9px] tracking-[1.5em] mb-16 opacity-20 uppercase font-light">The House of Monacans</div>
-        <button onclick="startExperience()" class="px-16 py-6 border border-white/10 text-[10px] tracking-[0.8em] hover:bg-white hover:text-black transition-all duration-1000 uppercase">
+        <div class="text-[9px] tracking-[1.5em] mb-12 opacity-30 uppercase font-light">The House of Monacoe</div>
+        <button onclick="startExperience()" class="px-12 py-5 border border-white/10 text-[10px] tracking-[0.8em] hover:bg-white hover:text-black transition-all duration-700 uppercase">
             Begin Experience
         </button>
     </div>
 
     <div id="main-site">
-        <nav class="fixed w-full z-[100] px-12 py-8 flex justify-between items-center mix-blend-difference">
-            <div class="text-2xl font-light tracking-[0.2em] uppercase serif cursor-pointer" onclick="window.location.reload()">MONACAN PRESTIGE</div>
-            <div class="hidden md:flex gap-16 text-[9px] uppercase tracking-[0.5em] font-light">
+        <nav class="fixed w-full z-[100] px-10 py-8 flex justify-between items-center mix-blend-difference">
+            <div class="text-xl font-light tracking-[0.3em] uppercase serif cursor-pointer" onclick="window.scrollTo(0,0)">MONACOE</div>
+            <div class="hidden md:flex gap-12 text-[8px] uppercase tracking-[0.4em] font-light">
                 <a href="#inventory" class="hover:opacity-40 transition">The Stable</a>
                 <a href="#accessories" class="hover:opacity-40 transition">Bespoke</a>
                 <a href="#contact" class="hover:opacity-40 transition">Privé</a>
@@ -81,81 +79,123 @@
                     <source src="https://cdn.pixabay.com/video/2021/08/04/83901-584795325_large.mp4" type="video/mp4">
                 </video>
             </div>
-            
             <audio id="track1"><source src="enginesound.m4a" type="audio/mp4"></audio>
             <audio id="track2"><source src="myeyes.m4a" type="audio/mp4"></audio>
 
-            <div class="relative z-10 reveal active">
-                <h1 class="text-6xl md:text-[9rem] font-bold tracking-tight leading-none mb-6 italic uppercase">The Rhythm <br> of the Road.</h1>
-                <p class="text-gray-500 max-w-lg mx-auto text-[9px] tracking-[1.2em] font-light uppercase">Curating the Exceptional</p>
+            <div class="relative z-10 reveal active px-4">
+                <h1 class="text-6xl md:text-[10rem] font-bold tracking-tighter leading-none mb-8 italic uppercase">The Rhythm <br> of the Road.</h1>
+                <p class="text-gray-500 max-w-lg mx-auto text-[10px] tracking-[1.2em] font-light uppercase">Curating the Exceptional</p>
             </div>
 
-            <div onclick="toggleMusic()" class="absolute bottom-12 right-12 z-[100] cursor-pointer flex items-center gap-4 opacity-30 hover:opacity-100 transition">
+            <div onclick="toggleMusic()" class="absolute bottom-12 right-12 z-[100] cursor-pointer opacity-30 hover:opacity-100 transition">
                 <span id="musicText" class="text-[8px] tracking-[0.4em] uppercase">Atmosphere Off</span>
             </div>
         </header>
 
-        <section id="inventory" class="py-60 px-10 max-w-[1500px] mx-auto relative z-20">
-            <h2 class="text-7xl font-light tracking-tighter serif mb-32 reveal italic">The <span class="font-bold">Stable</span></h2>
+        <section id="inventory" class="py-40 px-10 max-w-[1400px] mx-auto relative z-20">
+            <h2 class="text-6xl font-light serif mb-32 reveal italic uppercase">The <span class="font-bold">Stable</span></h2>
             
-            <div class="grid md:grid-cols-3 gap-20">
+            <div class="grid md:grid-cols-3 gap-16">
                 <div class="reveal group cursor-pointer" onclick="openDetails('GT-X Performance', '$120,000', 'V8 Biturbo', 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e')">
-                    <div class="overflow-hidden glass-card p-6 rounded-none mb-8">
+                    <div class="glass-card p-4 mb-6">
                         <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=800" class="grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
-                    <h3 class="text-xl font-light serif">GT-X Performance</h3>
-                    <p class="text-[10px] tracking-widest text-gray-600 mt-2 uppercase">$120,000 / V8 Biturbo</p>
+                    <h3 class="text-lg serif italic">GT-X Performance</h3>
+                    <p class="text-[9px] tracking-widest text-gray-600 mt-2 uppercase">$120,000 — V8 Biturbo</p>
                 </div>
-
                 <div class="reveal group cursor-pointer" onclick="openDetails('Midnight Edition', '$85,500', 'Electric', 'https://images.unsplash.com/photo-1555215695-3004980ad54e')">
-                    <div class="overflow-hidden glass-card p-6 rounded-none mb-8">
+                    <div class="glass-card p-4 mb-6">
                         <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" class="grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
-                    <h3 class="text-xl font-light serif">Midnight Edition</h3>
-                    <p class="text-[10px] tracking-widest text-gray-600 mt-2 uppercase">$85,500 / Electric</p>
+                    <h3 class="text-lg serif italic">Midnight Edition</h3>
+                    <p class="text-[9px] tracking-widest text-gray-600 mt-2 uppercase">$85,500 — Electric</p>
                 </div>
-
-                <div class="reveal group cursor-pointer" onclick="openDetails('Heritage Collection', '$210,000', 'Collector', 'https://images.unsplash.com/photo-1503376780353-7e6692767b70')">
-                    <div class="overflow-hidden glass-card p-6 rounded-none mb-8">
+                <div class="reveal group cursor-pointer" onclick="openDetails('Heritage 911', '$210,000', 'Flat-Six', 'https://images.unsplash.com/photo-1503376780353-7e6692767b70')">
+                    <div class="glass-card p-4 mb-6">
                         <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800" class="grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
-                    <h3 class="text-xl font-light serif">Heritage Collection</h3>
-                    <p class="text-[10px] tracking-widest text-gray-600 mt-2 uppercase">$210,000 / Collector</p>
+                    <h3 class="text-lg serif italic">Heritage 911</h3>
+                    <p class="text-[9px] tracking-widest text-gray-600 mt-2 uppercase">$210,000 — Collector</p>
                 </div>
             </div>
 
-            <div id="extra-cars" class="hidden-inventory mt-20 grid md:grid-cols-3 gap-20">
+            <div id="extra-cars" class="hidden-inventory mt-16 grid md:grid-cols-3 gap-16">
                 <div class="reveal group cursor-pointer" onclick="openDetails('Phantom V', '$450,000', 'V12', 'https://images.unsplash.com/photo-1631214503951-3751033d214c')">
-                    <div class="overflow-hidden glass-card p-6 rounded-none mb-8">
+                    <div class="glass-card p-4 mb-6">
                         <img src="https://images.unsplash.com/photo-1631214503951-3751033d214c?auto=format&fit=crop&q=80&w=800" class="grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
-                    <h3 class="text-xl font-light serif">Phantom V</h3>
-                    <p class="text-[10px] tracking-widest text-gray-600 mt-2 uppercase">$450,000 / V12</p>
+                    <h3 class="text-lg serif italic">Phantom V</h3>
+                    <p class="text-[9px] tracking-widest text-gray-600 mt-2 uppercase">$450,000 — V12</p>
                 </div>
             </div>
 
-            <div class="mt-32 text-center">
-                <button id="toggleBtn" onclick="toggleInventory()" class="text-[10px] tracking-[0.8em] uppercase opacity-40 hover:opacity-100 transition border-b border-white/20 pb-2">
-                    View Full Collection
+            <div class="mt-24 text-center">
+                <button id="toggleBtn" onclick="toggleInventory()" class="text-[9px] tracking-[0.6em] uppercase opacity-40 hover:opacity-100 transition border-b border-white/10 pb-2">
+                    Discover More
                 </button>
             </div>
         </section>
 
-        </div>
+        <section id="accessories" class="py-40 px-10 bg-[#080808] relative z-20">
+            <div class="max-w-[1400px] mx-auto">
+                <h2 class="text-6xl font-light serif mb-32 reveal italic text-right uppercase">Bespoke <span class="font-bold">Additions</span></h2>
+                
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div class="reveal group">
+                        <div class="aspect-[3/4] overflow-hidden glass-card mb-6">
+                            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                        </div>
+                        <h4 class="text-md serif italic">Hand-Stitched Interior</h4>
+                        <p class="text-[8px] text-gray-600 tracking-widest mt-1 uppercase">Custom Leather</p>
+                    </div>
+                    <div class="reveal group" style="transition-delay: 0.2s;">
+                        <div class="aspect-[3/4] overflow-hidden glass-card mb-6">
+                            <img src="https://images.unsplash.com/photo-1618453292459-53424b66bb6a?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                        </div>
+                        <h4 class="text-md serif italic">Monacoe Dash Clock</h4>
+                        <p class="text-[8px] text-gray-600 tracking-widest mt-1 uppercase">Swiss Precision</p>
+                    </div>
+                    <div class="reveal group" style="transition-delay: 0.4s;">
+                        <div class="aspect-[3/4] overflow-hidden glass-card mb-6">
+                            <img src="https://images.unsplash.com/photo-1508962914676-139429cf6978?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                        </div>
+                        <h4 class="text-md serif italic">Precision Care Kit</h4>
+                        <p class="text-[8px] text-gray-600 tracking-widest mt-1 uppercase">Exclusive Maintenance</p>
+                    </div>
+                    <div class="reveal group" style="transition-delay: 0.6s;">
+                        <div class="aspect-[3/4] overflow-hidden glass-card mb-6">
+                            <img src="https://images.unsplash.com/photo-1590566107030-34b19c8576e9?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                        </div>
+                        <h4 class="text-md serif italic">Driving Gloves</h4>
+                        <p class="text-[8px] text-gray-600 tracking-widest mt-1 uppercase">Italian Suede</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div id="details-view" class="fixed inset-0 bg-[#050505] z-[200] hidden overflow-y-auto p-10 md:p-20">
-        <nav class="mb-20">
-            <button onclick="closeDetails()" class="text-[10px] tracking-[0.5em] uppercase opacity-50 hover:opacity-100">← Back to Gallery</button>
-        </nav>
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
-            <img id="det-img" src="" class="w-full grayscale shadow-2xl">
-            <div>
-                <h1 id="det-name" class="text-7xl serif italic mb-6"></h1>
-                <p id="det-price" class="text-2xl font-light tracking-widest text-gray-500 mb-12"></p>
+        <section id="contact" class="py-60 px-10 relative z-20 text-center">
+            <div class="max-w-2xl mx-auto reveal">
+                <h2 class="text-5xl font-light serif mb-16 italic">Private Consultation</h2>
+                <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="space-y-12">
+                    <input type="text" name="Name" placeholder="CLIENT NAME" required class="w-full bg-transparent border-b border-white/10 p-4 text-[9px] tracking-[0.8em] outline-none focus:border-white transition text-center uppercase text-white">
+                    <button type="submit" class="text-[10px] tracking-[1em] font-light uppercase opacity-30 hover:opacity-100 transition">Establish Contact</button>
+                </form>
+            </div>
+            <p class="mt-40 text-[7px] tracking-[0.5em] opacity-20 uppercase font-light">Monacoe Prestige © 2026</p>
+        </section>
+    </div>
+
+    <div id="details-view" class="fixed inset-0 bg-[#050505] z-[200] hidden overflow-y-auto p-10 md:p-24">
+        <button onclick="closeDetails()" class="text-[9px] tracking-[0.5em] uppercase opacity-40 hover:opacity-100 mb-20 transition">← Close View</button>
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-24 items-start">
+            <img id="det-img" src="" class="w-full grayscale filter brightness-90 shadow-2xl">
+            <div class="reveal active">
+                <h1 id="det-name" class="text-6xl serif italic mb-4"></h1>
+                <p id="det-price" class="text-xl font-light tracking-widest text-gray-500 mb-12"></p>
                 <div class="border-t border-white/10 pt-10">
-                    <p class="text-[9px] tracking-[0.4em] text-gray-600 uppercase mb-2">Power Unit</p>
-                    <p id="det-engine" class="text-xl font-light mb-10"></p>
-                    <button class="w-full py-6 border border-white/10 text-[10px] tracking-[0.8em] uppercase hover:bg-white hover:text-black transition-all">Inquire via Prive</button>
+                    <p class="text-[8px] tracking-[0.4em] text-gray-600 uppercase mb-2">Technical Specification</p>
+                    <p id="det-engine" class="text-xl font-light mb-12"></p>
+                    <button class="w-full py-6 border border-white/10 text-[9px] tracking-[1em] uppercase hover:bg-white hover:text-black transition-all duration-700">Inquiry Prive</button>
                 </div>
             </div>
         </div>
@@ -177,7 +217,7 @@
                 floatingCar.style.display = 'block'; 
             }, 1500);
             video.play();
-            audio1.play().then(() => { mText.innerText = "Atmosphere On"; }).catch(e => console.log("Audio play failed"));
+            audio1.play().then(() => { mText.innerText = "Atmosphere On"; }).catch(e => console.log("Sound ready."));
         }
 
         function toggleMusic() {
@@ -190,7 +230,7 @@
             const btn = document.getElementById('toggleBtn');
             if (extra.style.display === 'grid') {
                 extra.style.display = 'none';
-                btn.innerText = "View Full Collection";
+                btn.innerText = "Discover More";
             } else {
                 extra.style.display = 'grid';
                 btn.innerText = "Show Less";
@@ -203,21 +243,21 @@
             document.getElementById('det-price').innerText = price;
             document.getElementById('det-engine').innerText = engine;
             document.getElementById('det-img').src = img;
-            document.getElementById('main-site').classList.add('hidden');
+            document.getElementById('main-site').style.display = 'none';
             document.getElementById('details-view').classList.remove('hidden');
             window.scrollTo(0,0);
         }
 
         function closeDetails() {
-            document.getElementById('main-site').classList.remove('hidden');
+            document.getElementById('main-site').style.display = 'block';
             document.getElementById('details-view').classList.add('hidden');
         }
 
         document.addEventListener('mousemove', (e) => {
             floatingCar.style.left = `${e.clientX - 225}px`;
             floatingCar.style.top = `${e.clientY - 150}px`;
-            const rotateX = (window.innerHeight / 2 - e.clientY) / 25;
-            const rotateY = (window.innerWidth / 2 - e.clientX) / 25;
+            const rotateX = (window.innerHeight / 2 - e.clientY) / 30;
+            const rotateY = (window.innerWidth / 2 - e.clientX) / 30;
             floatingCar.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
 
