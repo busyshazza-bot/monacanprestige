@@ -9,56 +9,67 @@
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,700&family=Inter:wght@100;300;600&display=swap" rel="stylesheet">
     
     <style>
-        /* 2. CORE THEME: Obsidian black background */
         :root { --obsidian: #050505; }
         body { 
             background-color: var(--obsidian); 
             color: #fff; 
             font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; 
+            overflow-x: hidden;
             margin: 0;
         }
         h1, h2, h3, h4, .serif { font-family: 'Bodoni Moda', serif; }
 
-        /* 3. INTERACTIVE CAR: The floating porsche */
-        #floating-car {
-            position: fixed; top: 0; left: 0; width: 400px; 
-            z-index: 5; pointer-events: none; /* Crucial: lets you click buttons behind it */
-            opacity: 0; /* Hidden until experience starts */
-            filter: drop-shadow(0 30px 40px rgba(0,0,0,0.9)) grayscale(20%);
-            transition: transform 0.1s linear, opacity 1s ease;
-        }
-
-        /* 4. BACKGROUND ROAD: The cinematic header image */
-        .hero-bg-road {
-            position: absolute; inset: 0;
-            background-image: url('https://images.unsplash.com/photo-1511994714008-b6d68a8b32a2?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover; background-position: center;
-            filter: brightness(0.3) contrast(1.2); z-index: 0;
-        }
-
-        /* 5. PRODUCT HOVER: Grayscale to Full Color transition */
-        .product-image {
-            filter: grayscale(100%) brightness(0.7);
-            transition: filter 0.7s ease, transform 0.7s ease;
-        }
-        .group:hover .product-image {
-            filter: grayscale(0%) brightness(1);
-            transform: scale(1.03);
-        }
-
-        /* 6. ENTRANCE SYSTEM: Black screen before starting */
+        /* 1. START GATE: Solid black, covers everything */
         #enter-overlay {
-            position: fixed; inset: 0; background: #000; z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: fixed; 
+            inset: 0; 
+            background: #000000; /* Solid black to hide the "salad" or road */
+            z-index: 10000; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
             transition: opacity 1s ease;
         }
 
-        /* 7. SCROLL ANIMATIONS: Elements slide up */
+        /* 2. CURSOR: Porsche follows mouse, z-index lower than nav but above road */
+        #floating-car {
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 400px; 
+            z-index: 5; 
+            pointer-events: none; 
+            opacity: 0; 
+            filter: drop-shadow(0 30px 40px rgba(0,0,0,0.9));
+            transition: transform 0.1s linear, opacity 1s ease;
+        }
+
+        /* 3. HERO ROAD: High-res cinematic road background */
+        .hero-bg-road {
+            position: absolute; 
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1511994714008-b6d68a8b32a2?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover; 
+            background-position: center;
+            filter: brightness(0.25) contrast(1.1); 
+            z-index: 0;
+        }
+
+        /* 4. PRODUCT HOVER: Grayscale to Color Reveal */
+        .product-image {
+            filter: grayscale(100%) brightness(0.6);
+            transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s ease;
+        }
+        .group:hover .product-image {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.02);
+        }
+
+        /* 5. SCROLL ANIMATION: Items slide up */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .glass-card { background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.04); }
+        .glass-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 </head>
 <body>
@@ -66,13 +77,13 @@
     <img id="floating-car" src="https://pngimg.com/d/porsche_PNG10620.png" alt="Porsche Cursor">
 
     <div id="enter-overlay">
-        <div class="text-[9px] tracking-[1.5em] mb-12 opacity-30 uppercase">The House of Monacoe</div>
-        <button onclick="startExperience()" class="px-12 py-5 border border-white/10 text-[10px] tracking-[0.8em] hover:bg-white hover:text-black transition-all uppercase">
+        <div class="text-[10px] tracking-[1.5em] mb-12 opacity-30 uppercase">The House of Monacoe</div>
+        <button onclick="startExperience()" class="px-14 py-6 border border-white/20 text-[10px] tracking-[0.8em] hover:bg-white hover:text-black transition-all duration-700 uppercase">
             Begin Experience
         </button>
     </div>
 
-    <div id="main-site">
+    <div id="main-site" style="opacity: 0;">
         <nav class="fixed w-full z-[100] px-10 py-8 flex justify-between items-center mix-blend-difference">
             <div class="text-xl font-light tracking-[0.3em] uppercase serif">MONACOE</div>
             <div class="hidden md:flex gap-12 text-[8px] uppercase tracking-[0.4em]">
@@ -84,17 +95,16 @@
 
         <header class="h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
             <div class="hero-bg-road"></div>
-            
             <audio id="track1"><source src="enginesound.m4a" type="audio/mp4"></audio>
 
             <div class="relative z-10 reveal active px-4">
-                <h1 class="text-6xl md:text-[9rem] font-bold tracking-tighter leading-none mb-6 italic uppercase">The Rhythm <br> of the Road.</h1>
-                <p class="text-gray-400 text-[10px] tracking-[1.2em] uppercase">Curating the Exceptional</p>
+                <h1 class="text-6xl md:text-[8.5rem] font-bold tracking-tighter leading-none mb-6 italic uppercase">The Rhythm <br> of the Road.</h1>
+                <p class="text-gray-400 text-[11px] tracking-[1.5em] uppercase font-light">Curating the Exceptional</p>
             </div>
         </header>
 
         <section id="inventory" class="py-40 px-10 max-w-[1400px] mx-auto relative z-20">
-            <h2 class="text-5xl font-light serif mb-32 reveal italic uppercase">The Stable</h2>
+            <h2 class="text-5xl font-light serif mb-32 reveal italic uppercase">The <span class="font-bold">Stable</span></h2>
             
             <div class="grid md:grid-cols-3 gap-16">
                 <div class="reveal group cursor-pointer" onclick="openDetails('GT-X Performance', '$120,000', 'V8 Biturbo', 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e')">
@@ -104,50 +114,50 @@
                     <h3 class="text-lg serif italic">GT-X Performance</h3>
                     <p class="text-[9px] tracking-widest text-gray-600 mt-2 uppercase">$120,000 — V8 Biturbo</p>
                 </div>
+                <div class="reveal group cursor-pointer" onclick="openDetails('Heritage 911', '$210,000', 'Collector', 'https://images.unsplash.com/photo-1503376780353-7e6692767b70')">
+                    <div class="glass-card p-4 mb-6 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800" class="product-image w-full">
+                    </div>
+                    <h3 class="text-lg serif italic">Heritage 911</h3>
+                    <p class="text-[9px] tracking-widest text-gray-600 mt-2 uppercase">$210,000 — Flat-Six</p>
+                </div>
                 <div class="reveal group cursor-pointer" onclick="openDetails('Midnight Edition', '$85,500', 'Electric', 'https://images.unsplash.com/photo-1555215695-3004980ad54e')">
                     <div class="glass-card p-4 mb-6 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" class="product-image w-full">
                     </div>
                     <h3 class="text-lg serif italic">Midnight Edition</h3>
-                    <p class="text-[9px] tracking-widest text-gray-600 mt-2 uppercase">$85,500 — Electric</p>
-                </div>
-                <div class="reveal group cursor-pointer" onclick="openDetails('Heritage 911', '$210,000', 'Flat-Six', 'https://images.unsplash.com/photo-1503376780353-7e6692767b70')">
-                    <div class="glass-card p-4 mb-6 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800" class="product-image w-full">
-                    </div>
-                    <h3 class="text-lg serif italic">Heritage 911</h3>
-                    <p class="text-[9px] tracking-widest text-gray-600 mt-2 uppercase">$210,000 — Collector</p>
+                    <p class="text-[9px] tracking-widest text-gray-600 mt-2 uppercase">$85,500 — Pure EV</p>
                 </div>
             </div>
         </section>
 
         <section id="accessories" class="py-40 px-10 bg-[#080808] relative z-20">
-            <div class="max-w-[1400px] mx-auto text-right">
-                <h2 class="text-5xl font-light serif mb-32 reveal italic uppercase">Bespoke Additions</h2>
-                <div class="grid md:grid-cols-4 gap-8 text-left">
+            <div class="max-w-[1400px] mx-auto">
+                <h2 class="text-5xl font-light serif mb-32 reveal italic text-right uppercase">Bespoke <span class="font-bold">Additions</span></h2>
+                <div class="grid md:grid-cols-4 gap-8">
                     <div class="reveal group">
                         <div class="aspect-[3/4] overflow-hidden glass-card mb-6">
                             <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover">
                         </div>
-                        <h4 class="text-md serif italic">Hand-Stitched Interior</h4>
+                        <h4 class="text-md serif italic">Stitched Leather</h4>
                     </div>
                     <div class="reveal group">
                         <div class="aspect-[3/4] overflow-hidden glass-card mb-6">
                             <img src="https://images.unsplash.com/photo-1618453292459-53424b66bb6a?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover">
                         </div>
-                        <h4 class="text-md serif italic">Dash Clock</h4>
+                        <h4 class="text-md serif italic">Dash Chrono</h4>
                     </div>
                     <div class="reveal group">
                         <div class="aspect-[3/4] overflow-hidden glass-card mb-6">
                             <img src="https://images.unsplash.com/photo-1508962914676-139429cf6978?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover">
                         </div>
-                        <h4 class="text-md serif italic">Care Kit</h4>
+                        <h4 class="text-md serif italic">Bespoke Kit</h4>
                     </div>
                     <div class="reveal group">
                         <div class="aspect-[3/4] overflow-hidden glass-card mb-6">
                             <img src="https://images.unsplash.com/photo-1590566107030-34b19c8576e9?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover">
                         </div>
-                        <h4 class="text-md serif italic">Driving Gloves</h4>
+                        <h4 class="text-md serif italic">Racing Gloves</h4>
                     </div>
                 </div>
             </div>
@@ -156,67 +166,72 @@
         <section id="contact" class="py-60 px-10 relative z-20 text-center">
             <div class="max-w-2xl mx-auto reveal">
                 <h2 class="text-4xl serif mb-12 italic uppercase">Private Consultation</h2>
-                <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain">
-                    <input type="text" placeholder="CLIENT NAME" required class="w-full bg-transparent border-b border-white/10 p-4 text-[9px] tracking-[0.8em] outline-none focus:border-white transition text-center uppercase mb-12">
-                    <button type="submit" class="text-[10px] tracking-[1em] opacity-30 hover:opacity-100 transition uppercase">Establish Contact</button>
+                <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="space-y-10">
+                    <input type="text" placeholder="CLIENT NAME" required class="w-full bg-transparent border-b border-white/10 p-4 text-[10px] tracking-[0.8em] outline-none focus:border-white transition text-center uppercase">
+                    <button type="submit" class="text-[10px] tracking-[1em] opacity-30 hover:opacity-100 transition uppercase">Send Invitation</button>
                 </form>
             </div>
         </section>
     </div>
 
-    <div id="details-view" class="fixed inset-0 bg-[#050505] z-[200] hidden overflow-y-auto p-10 md:p-24">
-        <button onclick="closeDetails()" class="text-[9px] tracking-[0.5em] uppercase opacity-40 hover:opacity-100 mb-20">← Close</button>
+    <div id="details-view" class="fixed inset-0 bg-[#050505] z-[1000] hidden overflow-y-auto p-10 md:p-24">
+        <button onclick="closeDetails()" class="text-[9px] tracking-[0.5em] uppercase opacity-40 hover:opacity-100 mb-20">← Close View</button>
         <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
             <img id="det-img" src="" class="w-full shadow-2xl">
-            <div>
+            <div class="reveal active">
                 <h1 id="det-name" class="text-6xl serif italic mb-4"></h1>
                 <p id="det-price" class="text-xl text-gray-500 mb-12"></p>
                 <div class="border-t border-white/10 pt-10">
-                    <p id="det-engine" class="text-xl font-light mb-12"></p>
-                    <button class="w-full py-6 border border-white/10 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">Inquire Prive</button>
+                    <p id="det-engine" class="text-xl font-light mb-12 text-gray-300"></p>
+                    <button class="w-full py-6 border border-white/10 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">Reserve This Piece</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Start Function
+        // EXPERIENCE INITIALIZATION
         function startExperience() {
-            document.getElementById('enter-overlay').style.opacity = '0';
+            const overlay = document.getElementById('enter-overlay');
+            const main = document.getElementById('main-site');
+            const car = document.getElementById('floating-car');
+            const audio = document.getElementById('track1');
+
+            overlay.style.opacity = '0';
             setTimeout(() => { 
-                document.getElementById('enter-overlay').style.display = 'none'; 
-                document.getElementById('floating-car').style.opacity = '0.25'; 
+                overlay.style.display = 'none'; 
+                main.style.opacity = '1';
+                car.style.opacity = '0.25'; 
             }, 1000);
-            document.getElementById('track1').play().catch(e => console.log("Audio waiting"));
+            audio.play().catch(e => console.log("Sound ready"));
         }
 
-        // Mouse Tracker
+        // 3D MOUSE TRACKING
         document.addEventListener('mousemove', (e) => {
             const car = document.getElementById('floating-car');
             car.style.left = `${e.clientX - 200}px`;
             car.style.top = `${e.clientY - 120}px`;
-            const rotX = (window.innerHeight / 2 - e.clientY) / 30;
-            const rotY = (window.innerWidth / 2 - e.clientX) / 30;
-            car.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+            const rX = (window.innerHeight / 2 - e.clientY) / 35;
+            const rY = (window.innerWidth / 2 - e.clientX) / 35;
+            car.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg)`;
         });
 
-        // Detail View Controls
+        // MODAL LOGIC
         function openDetails(name, price, engine, img) {
             document.getElementById('det-name').innerText = name;
             document.getElementById('det-price').innerText = price;
             document.getElementById('det-engine').innerText = engine;
             document.getElementById('det-img').src = img;
-            document.getElementById('main-site').style.display = 'none';
             document.getElementById('details-view').classList.remove('hidden');
-            window.scrollTo(0,0);
+            document.body.style.overflow = 'hidden';
         }
 
         function closeDetails() {
-            document.getElementById('main-site').style.display = 'block';
             document.getElementById('details-view').classList.add('hidden');
+            document.body.style.overflow = 'auto';
         }
 
-        // Scroll Reveal
+        // SCROLL REVEAL LOGIC
         window.addEventListener('scroll', () => {
             document.querySelectorAll('.reveal').forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
