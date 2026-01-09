@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MONACAN PRESTIGE</title>
+    <title>MONACAN</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,700&family=Inter:wght@100;300;600&display=swap" rel="stylesheet">
@@ -13,21 +13,18 @@
         body { background-color: var(--obsidian); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; margin: 0; }
         h1, h2, h3, h4, .serif { font-family: 'Bodoni Moda', serif; }
 
-        /* START GATE - Total Blackout */
         #enter-overlay {
             position: fixed; inset: 0; background: #000000; z-index: 10000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 1s ease;
         }
 
-        /* CURSOR - Porsche Drift */
         #floating-car {
             position: fixed; top: 0; left: 0; width: 400px; z-index: 5; 
             pointer-events: none; opacity: 0; filter: drop-shadow(0 30px 40px rgba(0,0,0,0.9));
             transition: transform 0.1s linear, opacity 1s ease;
         }
 
-        /* HERO BACKGROUND */
         .hero-bg-road {
             position: absolute; inset: 0;
             background-image: url('https://images.unsplash.com/photo-1511994714008-b6d68a8b32a2?auto=format&fit=crop&q=80&w=2000');
@@ -35,16 +32,13 @@
             filter: brightness(0.25) contrast(1.1); z-index: 0;
         }
 
-        /* GRAYSCALE TO COLOR TRANSITION */
         .product-image { filter: grayscale(100%) brightness(0.6); transition: 0.8s ease; }
         .group:hover .product-image { filter: grayscale(0%) brightness(1); transform: scale(1.02); }
 
-        /* ANIMATION */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .glass-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); }
-        
         #extra-inventory { display: none; }
     </style>
 </head>
@@ -53,14 +47,13 @@
     <img id="floating-car" src="https://pngimg.com/d/porsche_PNG10620.png" alt="Porsche Cursor">
 
     <div id="enter-overlay">
-        <div class="text-[10px] tracking-[1.5em] mb-12 opacity-30 uppercase">The House of Monacoe</div>
+        <div class="text-[10px] tracking-[1.5em] mb-12 opacity-30 uppercase">The House of Monacans</div>
         <button onclick="startExperience()" class="px-14 py-6 border border-white/20 text-[10px] tracking-[0.8em] hover:bg-white hover:text-black transition-all duration-700 uppercase">
             Begin Experience
         </button>
     </div>
 
     <div id="main-site" style="opacity: 0;">
-        
         <nav class="fixed w-full z-[100] px-10 py-8 flex justify-between items-center mix-blend-difference">
             <div class="text-xl font-light tracking-[0.3em] uppercase serif">MONACAN PRESTIGE</div>
             <div class="hidden md:flex gap-12 text-[8px] uppercase tracking-[0.4em]">
@@ -73,7 +66,7 @@
         <header class="h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
             <div class="hero-bg-road"></div>
             
-            <audio id="track1" loop preload="auto"><source src="enginesound.m4a" type="audio/mp4"></audio>
+            <audio id="track1" preload="auto"><source src="enginesound.m4a" type="audio/mp4"></audio>
             <audio id="track2" loop preload="auto"><source src="myeyes.m4a" type="audio/mp4"></audio>
 
             <div class="relative z-10 reveal active px-4">
@@ -91,7 +84,6 @@
 
         <section id="inventory" class="py-40 px-10 max-w-[1400px] mx-auto relative z-20">
             <h2 class="text-5xl font-light serif mb-32 reveal italic uppercase">The <span class="font-bold">Stable</span></h2>
-            
             <div class="grid md:grid-cols-3 gap-16">
                 <div class="reveal group cursor-pointer" onclick="openDetails('GT-X Performance', '$120,000', 'V8 Biturbo', 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e')">
                     <div class="glass-card p-4 mb-6 overflow-hidden"><img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=800" class="product-image w-full"></div>
@@ -121,7 +113,7 @@
 
         <section id="accessories" class="py-40 px-10 bg-[#080808] relative z-20">
             <div class="max-w-[1400px] mx-auto">
-                <h2 class="text-5xl font-light serif mb-32 reveal italic text-right uppercase">Bespoke <span class="font-bold">Additions</span></h2>
+                <h2 class="text-5xl font-light serif mb-32 reveal italic text-right uppercase">Acce<span class="font-bold">ssories</span></h2>
                 <div class="grid md:grid-cols-4 gap-8">
                     <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Stitched Leather</h4></div>
                     <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1618453292459-53424b66bb6a?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Dash Chrono</h4></div>
@@ -132,8 +124,8 @@
         </section>
 
         <section id="contact" class="py-60 px-10 relative z-20 text-center">
-            <div class="max-w-2xl mx-auto reveal text-center">
-                <h2 class="text-4xl serif mb-12 italic uppercase">Private Consultation</h2>
+            <div class="max-w-2xl mx-auto reveal">
+                <h2 class="text-4xl serif mb-12 italic uppercase">Contact Us</h2>
                 <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="space-y-10">
                     <input type="text" placeholder="CLIENT NAME" required class="w-full bg-transparent border-b border-white/10 p-4 text-[10px] tracking-[0.8em] outline-none focus:border-white transition text-center uppercase">
                     <button type="submit" class="text-[10px] tracking-[1em] opacity-30 hover:opacity-100 transition uppercase">Send Invitation</button>
@@ -164,8 +156,14 @@
         const dot = document.getElementById('status-dot');
         let playing = false;
 
+        // SEQUENCE LOGIC: When engine (t1) ends, start music (t2)
+        t1.onended = function() {
+            if (playing) {
+                t2.play();
+            }
+        };
+
         function startExperience() {
-            // Fade out Black Screen
             document.getElementById('enter-overlay').style.opacity = '0';
             setTimeout(() => { 
                 document.getElementById('enter-overlay').style.display = 'none'; 
@@ -173,11 +171,12 @@
                 document.getElementById('floating-car').style.opacity = '0.25'; 
             }, 1000);
             
-            // PRIMING: Browsers require this to allow the second track to play later
-            t1.play().catch(e => console.log("Engines Ready"));
-            t2.play().then(() => { t2.pause(); }).catch(e => console.log("Music Prepped"));
-            
+            // Start the sequence: Engine first
             playing = true;
+            t1.play();
+            // Pre-warm the music track so it's ready for the transition
+            t2.play().then(() => t2.pause());
+
             mText.innerText = "Atmosphere On";
             dot.classList.replace('bg-red-500', 'bg-green-500');
         }
@@ -189,8 +188,12 @@
                 mText.innerText = "Atmosphere Off";
                 dot.classList.replace('bg-green-500', 'bg-red-500');
             } else {
-                t1.play();
-                t2.play(); // This works now because we primed it in startExperience
+                // If engine hasn't finished, resume engine. If it has, play music.
+                if (t1.currentTime > 0 && !t1.ended) {
+                    t1.play();
+                } else {
+                    t2.play();
+                }
                 mText.innerText = "Atmosphere On";
                 dot.classList.replace('bg-red-500', 'bg-green-500');
             }
@@ -206,11 +209,10 @@
             } else {
                 extra.style.display = 'grid';
                 btn.innerText = "Show Less";
-                reveal(); // Refresh reveal animations
+                reveal();
             }
         }
 
-        // PORSCHE CURSOR TRACKING
         document.addEventListener('mousemove', (e) => {
             const car = document.getElementById('floating-car');
             car.style.left = `${e.clientX - 200}px`;
