@@ -82,34 +82,181 @@
             </div>
         </header>
 
-        <section id="inventory" class="py-40 px-10 max-w-[1400px] mx-auto relative z-20">
-            <h2 class="text-5xl font-light serif mb-32 reveal italic uppercase">The <span class="font-bold">Stable</span></h2>
-            <div class="grid md:grid-cols-3 gap-16">
-                <div class="reveal group cursor-pointer" onclick="openDetails('GT-X Performance', '$120,000', 'V8 Biturbo', 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e')">
-                    <div class="glass-card p-4 mb-6 overflow-hidden"><img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=800" class="product-image w-full"></div>
-                    <h3 class="text-lg serif italic">GT-X Performance</h3>
-                </div>
-                <div class="reveal group cursor-pointer" onclick="openDetails('Heritage 911', '$210,000', 'Flat-Six', 'https://images.unsplash.com/photo-1503376780353-7e6692767b70')">
-                    <div class="glass-card p-4 mb-6 overflow-hidden"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800" class="product-image w-full"></div>
-                    <h3 class="text-lg serif italic">Heritage 911</h3>
-                </div>
-                <div class="reveal group cursor-pointer" onclick="openDetails('Midnight Edition', '$85,500', 'Pure EV', 'https://images.unsplash.com/photo-1555215695-3004980ad54e')">
-                    <div class="glass-card p-4 mb-6 overflow-hidden"><img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" class="product-image w-full"></div>
-                    <h3 class="text-lg serif italic">Midnight Edition</h3>
-                </div>
-            </div>
+        <section id="inventory" class="py-40 px-10 max-w-[1400px] mx-auto relative z-20 text-white">
+    
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+        /* Zoom-in Logic */
+        .zoom-item {
+            cursor: zoom-in;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        .zoom-item img {
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .zoom-item.is-zoomed {
+            cursor: zoom-out;
+            position: relative;
+            z-index: 50;
+        }
+        .zoom-item.is-zoomed img {
+            transform: scale(1.6);
+        }
+        body.modal-active {
+            overflow: hidden;
+        }
+        #carModal::-webkit-scrollbar {
+            width: 5px;
+        }
+        #carModal::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+        }
+    </style>
 
-            <div id="extra-inventory" class="mt-16 grid md:grid-cols-3 gap-16">
-                <div class="reveal group cursor-pointer" onclick="openDetails('Phantom V', '$450,000', 'V12 Luxury', 'https://images.unsplash.com/photo-1631214503951-3751033d214c')">
-                    <div class="glass-card p-4 mb-6 overflow-hidden"><img src="https://images.unsplash.com/photo-1631214503951-3751033d214c?auto=format&fit=crop&q=80&w=800" class="product-image w-full"></div>
-                    <h3 class="text-lg serif italic">Phantom V</h3>
+    <h2 class="text-5xl font-light serif mb-32 reveal italic uppercase">The <span class="font-bold">Stable</span></h2>
+    
+    <div class="grid md:grid-cols-3 gap-16">
+        
+        <div class="reveal group cursor-pointer" onclick="openCarDetails('GT-X Performance', '$120,000', 'V8 Biturbo', [
+            'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e',
+            'https://images.unsplash.com/photo-1544636331-e26879cd4d9b',
+            'https://images.unsplash.com/photo-1552519507-da3b142c6e3d'
+        ])">
+            <div class="glass-card p-4 mb-6 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=800" class="w-full transition-transform duration-500 group-hover:scale-105">
+            </div>
+            <h3 class="text-lg serif italic">GT-X Performance</h3>
+        </div>
+
+        <div class="reveal group cursor-pointer" onclick="openCarDetails('Heritage 911', '$210,000', 'Flat-Six', [
+            'https://images.unsplash.com/photo-1503376780353-7e6692767b70',
+            'https://images.unsplash.com/photo-1580273916550-e323be2ae537',
+            'https://images.unsplash.com/photo-1469285994282-454ceb49e63c'
+        ])">
+            <div class="glass-card p-4 mb-6 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800" class="w-full transition-transform duration-500 group-hover:scale-105">
+            </div>
+            <h3 class="text-lg serif italic">Heritage 911</h3>
+        </div>
+
+        <div class="reveal group cursor-pointer" onclick="openCarDetails('Midnight Edition', '$85,500', 'Pure EV', [
+            'https://images.unsplash.com/photo-1555215695-3004980ad54e',
+            'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b'
+        ])">
+            <div class="glass-card p-4 mb-6 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" class="w-full transition-transform duration-500 group-hover:scale-105">
+            </div>
+            <h3 class="text-lg serif italic">Midnight Edition</h3>
+        </div>
+
+    </div>
+
+    <div id="extra-inventory" class="hidden mt-16 grid md:grid-cols-3 gap-16">
+        
+        <div class="reveal group cursor-pointer" onclick="openCarDetails('Phantom V', '$450,000', 'V12 Luxury', [
+            'https://images.unsplash.com/photo-1631214503951-3751033d214c',
+            'https://images.unsplash.com/photo-1637666218229-2007358399e6'
+        ])">
+            <div class="glass-card p-4 mb-6 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1631214503951-3751033d214c?auto=format&fit=crop&q=80&w=800" class="w-full transition-transform duration-500 group-hover:scale-105">
+            </div>
+            <h3 class="text-lg serif italic">Phantom V</h3>
+        </div>
+
+        <div class="reveal group cursor-pointer" onclick="openCarDetails('Stradale F1', '$625,000', 'Hybrid V8', [
+            'https://images.unsplash.com/photo-1592198084033-aade902d1aae',
+            'https://images.unsplash.com/photo-1614200170004-a280da7f9b1f'
+        ])">
+            <div class="glass-card p-4 mb-6 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1592198084033-aade902d1aae?auto=format&fit=crop&q=80&w=800" class="w-full transition-transform duration-500 group-hover:scale-105">
+            </div>
+            <h3 class="text-lg serif italic">Stradale F1</h3>
+        </div>
+
+        <div class="reveal group cursor-pointer" onclick="openCarDetails('Vantage Volante', '$190,000', 'Twin-Turbo V8', [
+            'https://images.unsplash.com/photo-1603577372314-f9ca2237899b',
+            'https://images.unsplash.com/photo-1566008885218-90abf9200ddb'
+        ])">
+            <div class="glass-card p-4 mb-6 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1603577372314-f9ca2237899b?auto=format&fit=crop&q=80&w=800" class="w-full transition-transform duration-500 group-hover:scale-105">
+            </div>
+            <h3 class="text-lg serif italic">Vantage Volante</h3>
+        </div>
+
+    </div>
+
+    <div class="mt-24 text-center">
+        <button id="viewMoreBtn" onclick="toggleViewMore()" class="text-[10px] tracking-[0.8em] uppercase opacity-40 hover:opacity-100 transition border-b border-white/20 pb-2">Discover More</button>
+    </div>
+
+    <div id="carModal" class="fixed inset-0 z-[999] hidden bg-black/95 overflow-y-auto backdrop-blur-xl">
+        <div class="max-w-[1400px] mx-auto p-6 md:p-20">
+            <button onclick="closeCarModal()" class="fixed top-8 right-8 z-[1000] text-white text-[10px] tracking-[0.4em] uppercase bg-white/10 px-6 py-3 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all">✕ Close</button>
+            
+            <div class="grid lg:grid-cols-12 gap-16 mt-10">
+                <div id="modalGallery" class="lg:col-span-8 space-y-10">
+                    </div>
+                
+                <div class="lg:col-span-4 lg:sticky lg:top-20 h-fit">
+                    <h2 id="modalTitle" class="text-6xl font-light serif italic mb-4 leading-tight"></h2>
+                    <p id="modalPrice" class="text-2xl opacity-60 mb-10 tracking-widest"></p>
+                    <div class="border-t border-white/10 pt-10 space-y-6">
+                        <div>
+                            <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mb-1">Drivetrain</p>
+                            <p id="modalEngine" class="text-xl italic serif"></p>
+                        </div>
+                        <button class="w-full py-4 border border-white/20 text-[10px] tracking-[0.5em] uppercase hover:bg-white hover:text-black transition-all">Request Private Viewing</button>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="mt-24 text-center">
-                <button id="viewMoreBtn" onclick="toggleViewMore()" class="text-[10px] tracking-[0.8em] uppercase opacity-40 hover:opacity-100 transition border-b border-white/20 pb-2">Discover More</button>
-            </div>
-        </section>
+    <script>
+        function openCarDetails(name, price, engine, images) {
+            const modal = document.getElementById('carModal');
+            const gallery = document.getElementById('modalGallery');
+            
+            document.getElementById('modalTitle').innerText = name;
+            document.getElementById('modalPrice').innerText = price;
+            document.getElementById('modalEngine').innerText = engine;
+            
+            gallery.innerHTML = '';
+            images.forEach(url => {
+                const div = document.createElement('div');
+                div.className = "zoom-item glass-card p-2";
+                // High-res version for the gallery
+                const fullRes = url.includes('unsplash') ? url + '?auto=format&fit=crop&q=90&w=1400' : url;
+                div.innerHTML = `<img src="${fullRes}" class="w-full block" loading="lazy">`;
+                
+                div.onclick = function() { this.classList.toggle('is-zoomed'); };
+                gallery.appendChild(div);
+            });
+            
+            modal.classList.remove('hidden');
+            document.body.classList.add('modal-active');
+        }
+
+        function closeCarModal() {
+            document.getElementById('carModal').classList.add('hidden');
+            document.body.classList.remove('modal-active');
+        }
+
+        function toggleViewMore() {
+            const extra = document.getElementById('extra-inventory');
+            const btn = document.getElementById('viewMoreBtn');
+            const isHidden = extra.classList.toggle('hidden');
+            btn.innerText = isHidden ? "Discover More" : "Show Less";
+        }
+
+        window.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeCarModal(); });
+    </script>
+</section>
 
         <section id="accessories" class="py-40 px-10 bg-[#080808] relative z-20">
             <div class="max-w-[1400px] mx-auto">
