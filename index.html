@@ -137,42 +137,35 @@
     </div>
 
     <script>
-    function openDetails(name, price, engine, images) {
-        const modal = document.getElementById('carModal');
-        const gallery = document.getElementById('modalGallery');
+   function openDetails(name, price, engine, images) {
+    const modal = document.getElementById('carModal');
+    const gallery = document.getElementById('modalGallery');
+    
+    // 1. Update the text fields
+    document.getElementById('modalTitle').innerText = name;
+    document.getElementById('modalPrice').innerText = price + " | " + engine;
+    
+    // 2. Clear the gallery so you don't see images from the previous car
+    gallery.innerHTML = ''; 
+    
+    // 3. This part is crucial: it loops through your ['img1', 'img2'] list
+    images.forEach(path => {
+        const img = document.createElement('img');
+        img.src = path; 
+        img.className = "w-full h-auto object-cover rounded border border-white/5 mb-4";
         
-        // Update Text
-        document.getElementById('modalTitle').innerText = name;
-        document.getElementById('modalPrice').innerText = price + " | " + engine;
+        // This helps you catch typos in your folder names
+        img.onerror = function() {
+            console.error("❌ Monacan Prestige can't find image at: " + path);
+        };
         
-        // Clear previous images
-        gallery.innerHTML = ''; 
+        gallery.appendChild(img);
+    });
 
-        // Convert single string to array if necessary (Safety Check)
-        const imageList = Array.isArray(images) ? images : [images];
-
-        imageList.forEach(path => {
-            const img = document.createElement('img');
-            img.src = path; 
-            img.className = "w-full h-auto object-cover rounded border border-white/5 mb-4";
-            
-            // LOG ERROR TO CONSOLE IF IMAGE FAILS
-            img.onerror = function() {
-                console.error("❌ IMAGE NOT FOUND: Check if this path matches your sidebar exactly ->", path);
-                this.style.display = 'none'; // Hide broken image icons
-            };
-
-            gallery.appendChild(img);
-        });
-
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; 
-    }
-
-    function closeModal() {
-        document.getElementById('carModal').classList.add('hidden');
-        document.body.style.overflow = 'auto'; 
-    }
+    // 4. Show the modal and lock scrolling
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden'; 
+}
 </script>
 </section>
 
