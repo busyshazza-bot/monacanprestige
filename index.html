@@ -136,42 +136,43 @@
     </div>
 
     <script>
-        function openDetails(name, price, engine, images) {
-            const modal = document.getElementById('carModal');
-            const gallery = document.getElementById('modalGallery');
+    function openDetails(name, price, engine, images) {
+        const modal = document.getElementById('carModal');
+        const gallery = document.getElementById('modalGallery');
+        
+        // Update Text
+        document.getElementById('modalTitle').innerText = name;
+        document.getElementById('modalPrice').innerText = price + " | " + engine;
+        
+        // Clear previous images
+        gallery.innerHTML = ''; 
+
+        // Convert single string to array if necessary (Safety Check)
+        const imageList = Array.isArray(images) ? images : [images];
+
+        imageList.forEach(path => {
+            const img = document.createElement('img');
+            img.src = path; 
+            img.className = "w-full h-auto object-cover rounded border border-white/5 mb-4";
             
-            document.getElementById('modalTitle').innerText = name;
-            document.getElementById('modalPrice').innerText = price + " | " + engine;
-            
-            gallery.innerHTML = ''; 
-            images.forEach(path => {
-                const img = document.createElement('img');
-                img.src = path; 
-                img.className = "w-full h-auto object-cover rounded border border-white/5";
-                gallery.appendChild(img);
-            });
+            // LOG ERROR TO CONSOLE IF IMAGE FAILS
+            img.onerror = function() {
+                console.error("❌ IMAGE NOT FOUND: Check if this path matches your sidebar exactly ->", path);
+                this.style.display = 'none'; // Hide broken image icons
+            };
 
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; 
-        }
+            gallery.appendChild(img);
+        });
 
-        function closeModal() {
-            document.getElementById('carModal').classList.add('hidden');
-            document.body.style.overflow = 'auto'; 
-        }
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; 
+    }
 
-        function toggleViewMore() {
-            const extra = document.getElementById('extra-inventory');
-            const btn = document.getElementById('viewMoreBtn');
-            if (extra.classList.contains('hidden')) {
-                extra.classList.remove('hidden');
-                btn.innerText = "Show Less";
-            } else {
-                extra.classList.add('hidden');
-                btn.innerText = "Discover More";
-            }
-        }
-    </script>
+    function closeModal() {
+        document.getElementById('carModal').classList.add('hidden');
+        document.body.style.overflow = 'auto'; 
+    }
+</script>
 </section>
 
         <section id="accessories" class="py-40 px-10 bg-[#080808] relative z-20">
