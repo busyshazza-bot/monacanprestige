@@ -136,41 +136,6 @@
         </div>
     </div>
 
-    <script>
-   function openDetails(name, price, engine, images) {
-        const modal = document.getElementById('carModal');
-        const gallery = document.getElementById('modalGallery');
-        const titleEl = document.getElementById('modalTitle');
-        const priceEl = document.getElementById('modalPrice');
-
-        // Update Text
-        titleEl.innerText = name;
-        priceEl.innerText = `${price} | ${engine}`;
-
-        // Clear and Build Gallery
-        gallery.innerHTML = '';
-        
-        // Ensure images is an array even if a single string is passed
-        const imageList = Array.isArray(images) ? images : [images];
-
-        imageList.forEach(path => {
-            const img = document.createElement('img');
-            img.src = path;
-            img.className = "w-full h-64 object-cover rounded border border-white/5";
-            img.onerror = () => img.style.display = 'none'; // Hide if path is broken
-            gallery.appendChild(img);
-        });
-
-        // Show Modal
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        document.getElementById('carModal').classList.add('hidden');
-        document.body.style.overflow = 'auto';
-    }
-</script>
 </section>
 
         <section id="accessories" class="py-40 px-10 bg-[#080808] relative z-20">
@@ -291,41 +256,52 @@
             playing = !playing;
         }
 
+        // Inventory Logic
+        function openDetails(name, price, engine, images) {
+            const modal = document.getElementById('carModal');
+            const gallery = document.getElementById('modalGallery');
+            document.getElementById('modalTitle').innerText = name;
+            document.getElementById('modalPrice').innerText = `${price} | ${engine}`;
+            
+            gallery.innerHTML = '';
+            const imageList = Array.isArray(images) ? images : [images];
+            imageList.forEach(path => {
+                const img = document.createElement('img');
+                img.src = path;
+                img.className = "w-full h-64 object-cover rounded border border-white/5";
+                img.onerror = () => img.style.display = 'none';
+                gallery.appendChild(img);
+            });
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('carModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
         function toggleViewMore() {
             const extra = document.getElementById('extra-inventory');
             const btn = document.getElementById('viewMoreBtn');
-            if (extra.style.display === 'grid') {
-                extra.style.display = 'none';
-                btn.innerText = "Discover More";
-            } else {
+            if (extra.style.display === 'none' || extra.style.display === '') {
                 extra.style.display = 'grid';
                 btn.innerText = "Show Less";
-                reveal();
+                reveal(); // Check for items to animate in
+            } else {
+                extra.style.display = 'none';
+                btn.innerText = "Discover More";
             }
         }
 
+        // Interactivity
         document.addEventListener('mousemove', (e) => {
-            const car = document.getElementById('floating-car');
             car.style.left = `${e.clientX - 200}px`;
             car.style.top = `${e.clientY - 120}px`;
             const rX = (window.innerHeight / 2 - e.clientY) / 35;
             const rY = (window.innerWidth / 2 - e.clientX) / 35;
             car.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg)`;
         });
-
-        function openDetails(name, price, engine, img) {
-            document.getElementById('det-name').innerText = name;
-            document.getElementById('det-price').innerText = price;
-            document.getElementById('det-engine').innerText = engine;
-            document.getElementById('det-img').src = img;
-            document.getElementById('details-view').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDetails() {
-            document.getElementById('details-view').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
 
         const reveal = () => {
             document.querySelectorAll('.reveal').forEach(el => {
@@ -335,6 +311,8 @@
             });
         };
         window.addEventListener('scroll', reveal);
+        // Initial check for elements in view
+        reveal();
     </script>
 </body>
 </html>
