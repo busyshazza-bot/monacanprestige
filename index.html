@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MONACAN</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,700&family=Inter:wght@100;300;600&display=swap" rel="stylesheet">
-    
+
     <style>
         :root { --obsidian: #050505; }
         body { background-color: var(--obsidian); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; margin: 0; }
@@ -65,7 +65,7 @@
 
         <header class="h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
             <div class="hero-bg-road"></div>
-            
+
             <audio id="track1" preload="auto"><source src="enginesound.m4a" type="audio/mp4"></audio>
             <audio id="track2" loop preload="auto"><source src="myeyes.m4a" type="audio/mp4"></audio>
 
@@ -84,7 +84,7 @@
 
        <section id="inventory" class="py-40 px-10 max-w-[1400px] mx-auto relative z-20">
             <h2 class="text-5xl font-light serif mb-32 reveal italic uppercase">The <span class="font-bold">Stable</span></h2>
-            
+
             <div class="grid md:grid-cols-3 gap-16">
                 <div class="reveal group cursor-pointer" onclick="openDetails('Honda Jazz 2014', '£8,500', '1.3L i-VTEC', ['hondajazz.jpg'])">
                     <div class="glass-card p-4 mb-6 overflow-hidden">
@@ -148,7 +148,7 @@
                     <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1590566107030-34b19c8576e9?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Racing Gloves</h4></div>
                 </div>
             </div>
-            
+
         </section>
         <section id="contact" class="py-60 px-10 relative z-20 text-center">
         <div class="max-w-6xl mx-auto">
@@ -163,7 +163,7 @@
                         <input type="text" name="Name" placeholder="NAME" required class="w-full p-5 rounded-xl text-sm tracking-widest">
                         <input type="text" name="Vehicle" placeholder="INTERESTED VEHICLE" class="w-full p-5 rounded-xl text-sm tracking-widest">
                         <textarea name="Message" placeholder="MESSAGE" rows="4" class="w-full p-5 rounded-xl text-sm tracking-widest"></textarea>
-                        
+
                         <button type="submit" class="w-full bg-white text-black py-5 rounded-xl font-bold text-[10px] tracking-[0.3em] hover:bg-gray-200 transition">
                             SEND INQUIRY
                         </button>
@@ -227,7 +227,7 @@
                 document.getElementById('main-site').style.opacity = '1';
                 document.getElementById('floating-car').style.opacity = '0.25'; 
             }, 1000);
-            
+
             // Start the sequence: Engine first
             playing = true;
             t1.play();
@@ -263,7 +263,7 @@
             const gallery = document.getElementById('modalGallery');
             document.getElementById('modalTitle').innerText = name;
             document.getElementById('modalPrice').innerText = `${price} | ${engine}`;
-            
+
             gallery.innerHTML = '';
             const imageList = Array.isArray(images) ? images : [images];
             imageList.forEach(path => {
@@ -296,27 +296,14 @@
         }
 
         // Interactivity
-       document.addEventListener('mousemove', (e) => {
-            // MATH: Half of width (250/2 = 125) and half of estimated height (~60)
-            const xOffset = 125;
-            const yOffset = 60;
-
-            car.style.left = `${e.clientX - xOffset}px`;
-            car.style.top = `${e.clientY - yOffset}px`;
-
-            // 3D TILT
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const mouseXFromCenter = (e.clientX - centerX) / centerX; 
-            const mouseYFromCenter = (e.clientY - centerY) / centerY;
-
-            const tiltY = mouseXFromCenter * 20; 
-            const tiltX = mouseYFromCenter * -10; 
-            
-            car.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+        document.addEventListener('mousemove', (e) => {
+            car.style.left = `${e.clientX - 200}px`;
+            car.style.top = `${e.clientY - 120}px`;
+            const rX = (window.innerHeight / 2 - e.clientY) / 35;
+            const rY = (window.innerWidth / 2 - e.clientX) / 35;
+            car.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg)`;
         });
 
-        // REVEAL ANIMATION
         const reveal = () => {
             document.querySelectorAll('.reveal').forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
@@ -325,6 +312,7 @@
             });
         };
         window.addEventListener('scroll', reveal);
+        // Initial check for elements in view
         reveal();
     </script>
 </body>
