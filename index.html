@@ -296,28 +296,36 @@
         }
 
         // Interactivity
-        document.addEventListener('mousemove', (e) => {
-    // 1. Smooth Position Follow
-    // Centers the 400px image (200px offset)
-    car.style.left = `${e.clientX - 200}px`;
-    car.style.top = `${e.clientY - 100}px`;
+       document.addEventListener('mousemove', (e) => {
+            // MATH: Half of width (250/2 = 125) and half of estimated height (~60)
+            const xOffset = 125;
+            const yOffset = 60;
 
-    // 2. Realistic Tilt Math
-    // Calculate distance from center (normalized from -1 to 1)
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    
-    const mouseXFromCenter = (e.clientX - centerX) / centerX; 
-    const mouseYFromCenter = (e.clientY - centerY) / centerY;
+            car.style.left = `${e.clientX - xOffset}px`;
+            car.style.top = `${e.clientY - yOffset}px`;
 
-    // Adjust these numbers to increase/decrease intensity:
-    const tiltY = mouseXFromCenter * 25;  // Car "steers" left/right
-    const tiltX = mouseYFromCenter * -15; // Car "noses" up/down
-    
-    // 3. Apply Transform
-    // Added a slight scale(1.1) to make it feel more "floating"
-    car.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.05)`;
-});
+            // 3D TILT
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const mouseXFromCenter = (e.clientX - centerX) / centerX; 
+            const mouseYFromCenter = (e.clientY - centerY) / centerY;
+
+            const tiltY = mouseXFromCenter * 20; 
+            const tiltX = mouseYFromCenter * -10; 
+            
+            car.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+        });
+
+        // REVEAL ANIMATION
+        const reveal = () => {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', reveal);
+        reveal();
     </script>
 </body>
 </html>
