@@ -138,39 +138,38 @@
 
     <script>
    function openDetails(name, price, engine, images) {
-    const modal = document.getElementById('carModal');
-    const gallery = document.getElementById('modalGallery');
-    const titleEl = document.getElementById('modalTitle');
-    const priceEl = document.getElementById('modalPrice');
+        const modal = document.getElementById('carModal');
+        const gallery = document.getElementById('modalGallery');
+        const titleEl = document.getElementById('modalTitle');
+        const priceEl = document.getElementById('modalPrice');
 
-    // Safety Check: Ensure elements exist before writing to them
-    if (titleEl) titleEl.innerText = name || "No Name Provided";
-    if (priceEl) priceEl.innerText = `${price || 'N/A'} | ${engine || 'N/A'}`;
-    
-    if (gallery) {
-        gallery.innerHTML = ''; // Clear previous images
+        // Update Text
+        titleEl.innerText = name;
+        priceEl.innerText = `${price} | ${engine}`;
+
+        // Clear and Build Gallery
+        gallery.innerHTML = '';
         
-        // Ensure images is treated as an array
-        const list = Array.isArray(images) ? images : [];
-        
-        list.forEach(path => {
+        // Ensure images is an array even if a single string is passed
+        const imageList = Array.isArray(images) ? images : [images];
+
+        imageList.forEach(path => {
             const img = document.createElement('img');
-            img.src = path; 
-            img.className = "w-full h-auto object-cover rounded border border-white/5 mb-4";
-            img.loading = "lazy"; // Performance optimization
-            
-            img.onerror = () => console.error("Could not load:", path);
+            img.src = path;
+            img.className = "w-full h-64 object-cover rounded border border-white/5";
+            img.onerror = () => img.style.display = 'none'; // Hide if path is broken
             gallery.appendChild(img);
         });
+
+        // Show Modal
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
     }
 
-    if (modal) {
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; 
-    } else {
-        console.error("Element #carModal not found in HTML");
+    function closeModal() {
+        document.getElementById('carModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
     }
-}
 </script>
 </section>
 
