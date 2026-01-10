@@ -305,13 +305,19 @@
         }
 
         // Interactivity
-        document.addEventListener('mousemove', (e) => {
-            car.style.left = `${e.clientX - 200}px`;
-            car.style.top = `${e.clientY - 120}px`;
-            const rX = (window.innerHeight / 2 - e.clientY) / 35;
-            const rY = (window.innerWidth / 2 - e.clientX) / 35;
-            car.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg)`;
-        });
+        // This math keeps the mouse in the middle of the 200px image
+document.addEventListener('mousemove', (e) => {
+    // Left: cursor position minus 100px (half of 200px width)
+    car.style.left = `${e.clientX - 100}px`; 
+    
+    // Top: cursor position minus 60px (approx half of the image height)
+    car.style.top = `${e.clientY - 60}px`;
+
+    // Tilt effect logic remains the same
+    const rX = (window.innerHeight / 2 - e.clientY) / 35;
+    const rY = (window.innerWidth / 2 - e.clientX) / 35;
+    car.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg)`;
+});
 
         const reveal = () => {
             document.querySelectorAll('.reveal').forEach(el => {
