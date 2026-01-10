@@ -20,10 +20,17 @@
         }
 
         #floating-car {
-            position: fixed; top: 0; left: 0; width: 200px; z-index: 5; 
-            pointer-events: none; opacity: 0; filter: drop-shadow(0 30px 40px rgba(0,0,0,0.9));
-            transition: transform 0.1s linear, opacity 1s ease;
-        }
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 200px; /* Your new smaller size */
+    z-index: 5; 
+    pointer-events: none; 
+    opacity: 0; 
+    /* Reduced shadow size to match the 200px car */
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.8));
+    transition: transform 0.1s linear, opacity 1s ease;
+}
 
         .hero-bg-road {
             position: absolute; inset: 0;
