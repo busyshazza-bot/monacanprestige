@@ -138,35 +138,38 @@
 
     <script>
    function openDetails(name, price, engine, images) {
-    console.log("Images received:", images); // Add this line
-    console.log("Type of images:", typeof images); // And this
     const modal = document.getElementById('carModal');
     const gallery = document.getElementById('modalGallery');
-    
-    // 1. Update the text fields
-    document.getElementById('modalTitle').innerText = name;
-    document.getElementById('modalPrice').innerText = price + " | " + engine;
-    
-    // 2. Clear the gallery so you don't see images from the previous car
-    gallery.innerHTML = ''; 
-    
-    // 3. This part is crucial: it loops through your ['img1', 'img2'] list
-    images.forEach(path => {
-        const img = document.createElement('img');
-        img.src = path; 
-        img.className = "w-full h-auto object-cover rounded border border-white/5 mb-4";
-        
-        // This helps you catch typos in your folder names
-        img.onerror = function() {
-            console.error("❌ Monacan Prestige can't find image at: " + path);
-        };
-        
-        gallery.appendChild(img);
-    });
+    const titleEl = document.getElementById('modalTitle');
+    const priceEl = document.getElementById('modalPrice');
 
-    // 4. Show the modal and lock scrolling
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; 
+    // Safety Check: Ensure elements exist before writing to them
+    if (titleEl) titleEl.innerText = name || "No Name Provided";
+    if (priceEl) priceEl.innerText = `${price || 'N/A'} | ${engine || 'N/A'}`;
+    
+    if (gallery) {
+        gallery.innerHTML = ''; // Clear previous images
+        
+        // Ensure images is treated as an array
+        const list = Array.isArray(images) ? images : [];
+        
+        list.forEach(path => {
+            const img = document.createElement('img');
+            img.src = path; 
+            img.className = "w-full h-auto object-cover rounded border border-white/5 mb-4";
+            img.loading = "lazy"; // Performance optimization
+            
+            img.onerror = () => console.error("Could not load:", path);
+            gallery.appendChild(img);
+        });
+    }
+
+    if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; 
+    } else {
+        console.error("Element #carModal not found in HTML");
+    }
 }
 </script>
 </section>
