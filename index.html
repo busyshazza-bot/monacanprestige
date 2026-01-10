@@ -297,23 +297,27 @@
 
         // Interactivity
         document.addEventListener('mousemove', (e) => {
-            car.style.left = `${e.clientX - 200}px`;
-            car.style.top = `${e.clientY - 120}px`;
-            const rX = (window.innerHeight / 2 - e.clientY) / 35;
-            const rY = (window.innerWidth / 2 - e.clientX) / 35;
-            car.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg)`;
-        });
+    // 1. Smooth Position Follow
+    // Centers the 400px image (200px offset)
+    car.style.left = `${e.clientX - 200}px`;
+    car.style.top = `${e.clientY - 100}px`;
 
-        const reveal = () => {
-            document.querySelectorAll('.reveal').forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
-                    el.classList.add('active');
-                }
-            });
-        };
-        window.addEventListener('scroll', reveal);
-        // Initial check for elements in view
-        reveal();
+    // 2. Realistic Tilt Math
+    // Calculate distance from center (normalized from -1 to 1)
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    
+    const mouseXFromCenter = (e.clientX - centerX) / centerX; 
+    const mouseYFromCenter = (e.clientY - centerY) / centerY;
+
+    // Adjust these numbers to increase/decrease intensity:
+    const tiltY = mouseXFromCenter * 25;  // Car "steers" left/right
+    const tiltX = mouseYFromCenter * -15; // Car "noses" up/down
+    
+    // 3. Apply Transform
+    // Added a slight scale(1.1) to make it feel more "floating"
+    car.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.05)`;
+});
     </script>
 </body>
 </html>
