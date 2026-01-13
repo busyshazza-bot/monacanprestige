@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MONACAN PRESTIGE</title>
+    <title>MONACAN PRESTIGE | Curating the Exceptional</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,700&family=Inter:wght@100;300;600&display=swap" rel="stylesheet">
@@ -13,48 +13,37 @@
         body { background-color: var(--obsidian); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; margin: 0; }
         h1, h2, h3, h4, .serif { font-family: 'Bodoni Moda', serif; }
 
+        /* Site Visibility Logic */
+        #main-site { opacity: 0; visibility: hidden; transition: opacity 1.5s ease; }
+        #main-site.visible { opacity: 1; visibility: visible; }
+
         #enter-overlay {
-            position: fixed; inset: 0; background: #000000; z-index: 10000;
+            position: fixed; inset: 0; background: #000; z-index: 10000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 1s ease;
         }
 
         #floating-car {
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 200px; /* Your new smaller size */
-    z-index: 5; 
-    pointer-events: none; 
-    opacity: 0; 
-    /* Reduced shadow size to match the 200px car */
-    filter: drop-shadow(0 15px 25px rgba(1,1,1,1));
-    transition: transform 0.1s linear, opacity 1s ease;
-}
+            position: fixed; top: 0; left: 0; width: 220px; 
+            z-index: 5; pointer-events: none; opacity: 0; 
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
+            transition: opacity 1s ease;
+        }
 
         .hero-bg-road {
             position: absolute; inset: 0;
             background-image: url('welcome.png');
             background-size: cover; background-position: center;
-            filter: brightness(0.5) contrast(1.1); z-index: 0;
+            filter: brightness(0.35) contrast(1.1); z-index: 0;
         }
 
-        .product-image { filter: grayscale(100%) brightness(0.6); transition: 0.8s ease; }
-        .group:hover .product-image { filter: grayscale(0%) brightness(1); transform: scale(1.02); }
-
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease-out; }
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .glass-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); }
-        #extra-inventory { display: none; }
-        .hero-text-shadow { text-shadow: 0px 4px 20px rgba(0,0,0,0.6); }
         .type-cursor {
-            display: inline-block;
-            width: 2px;
-            background-color: white;
-            margin-left: 4px;
-            animation: blink 0.8s infinite;
-            vertical-align: middle;
+            display: inline-block; width: 2px; height: 1em;
+            background-color: white; margin-left: 4px;
+            animation: blink 0.8s infinite; vertical-align: middle;
         }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
@@ -63,167 +52,81 @@
 
     <img id="floating-car" src="https://pngimg.com/d/porsche_PNG10620.png" alt="Porsche Cursor">
 
-    <div id="enter-overlay" class="fixed inset-0 flex flex-col items-center justify-center text-center">
-    <div class="text-[10px] tracking-[1.5em] -mr-[1.5em] mb-12 opacity-30 uppercase">
-        The House of Monacans
-    </div>
-        <button onclick="startExperience()" class="px-14 py-6 border border-white/20 text-[10px] tracking-[0.8em] hover:bg-white hover:text-black transition-all duration-700 uppercase">
+    <div id="enter-overlay">
+        <div class="text-[9px] tracking-[2em] -mr-[2em] mb-12 opacity-20 uppercase">The House of Monacans</div>
+        <button onclick="startExperience()" class="px-16 py-7 border border-white/10 text-[10px] tracking-[1em] hover:bg-white hover:text-black transition-all duration-1000 uppercase">
             Begin Experience
         </button>
     </div>
 
-    <div id="main-site" style="opacity: 0;">
-        <nav class="fixed w-full z-[100] px-10 py-8 flex justify-between items-center mix-blend-difference">
-    <div class="text-xl font-light tracking-[0.3em] uppercase serif hero-text-shadow">MONACAN PRESTIGE</div>
-    
-    <div class="hidden md:flex gap-12 text-[8px] uppercase tracking-[0.4em]">
-        <a href="#inventory" class="hover:opacity-40 transition">Our Cars</a>
-        <a href="#accessories" class="hover:opacity-40 transition">Accessories</a>
-        <a href="#contact" class="hover:opacity-40 transition">Contact Us</a>
-    </div>
-</nav>
+    <div id="main-site">
+        <nav class="fixed w-full z-[100] px-12 py-10 flex justify-between items-center mix-blend-difference">
+            <div class="text-xl font-light tracking-[0.4em] uppercase serif">MONACAN PRESTIGE</div>
+            <div class="hidden md:flex gap-12 text-[9px] uppercase tracking-[0.5em] opacity-60">
+                <a href="#inventory" class="hover:opacity-100 transition">Inventory</a>
+                <a href="#contact" class="hover:opacity-100 transition">Contact</a>
+            </div>
+        </nav>
 
         <header class="h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
             <div class="hero-bg-road"></div>
-
+            
             <audio id="track1" preload="auto"><source src="enginesound.m4a" type="audio/mp4"></audio>
             <audio id="track2" loop preload="auto"><source src="myeyes.m4a" type="audio/mp4"></audio>
-            <div class="relative z-10 px-4">
-                <h1 id="hero-title" class="text-6xl md:text-[7xl] font-bold tracking-tighter leading-none mb-6 italic uppercase min-h-[1.2em]"></h1>
-                <p id="hero-subtitle" class="text-gray-400 text-[11px] tracking-[1.5em] uppercase font-light min-h-[1em]"></p>
+
+            <div class="relative z-10 px-6">
+                <h1 id="hero-title" class="text-5xl md:text-8xl font-bold tracking-tighter mb-8 italic uppercase min-h-[1.1em]"></h1>
+                <p id="hero-subtitle" class="text-gray-400 text-[10px] tracking-[1.8em] uppercase font-light min-h-[1em]"></p>
             </div>
 
-            <div class="relative z-10 reveal active px-4">
-                <h1 class="text-6xl md:text-[7xl] font-bold tracking-tighter leading-none mb-6 italic uppercase">The Rhythm of the Road.</h1>
-                <p class="text-gray-400 text-[11px] tracking-[1.5em] uppercase font-light">Curating the Exceptional</p>
-            </div>
-
-            <div onclick="toggleMusic()" class="absolute bottom-12 right-12 z-[100] cursor-pointer group">
-                <div class="flex items-center gap-4 border border-white/10 px-6 py-3 rounded-full hover:bg-white/10 transition">
-                    <div id="status-dot" class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
-                    <span id="musicText" class="text-[8px] tracking-[0.4em] uppercase opacity-50">Atmosphere Off</span>
+            <div onclick="toggleMusic()" class="absolute bottom-12 right-12 z-[100] cursor-pointer">
+                <div class="flex items-center gap-4 border border-white/5 bg-black/20 backdrop-blur-md px-6 py-3 rounded-full hover:bg-white/10 transition">
+                    <div id="status-dot" class="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+                    <span id="musicText" class="text-[8px] tracking-[0.4em] uppercase opacity-40">Atmosphere Off</span>
                 </div>
             </div>
         </header>
 
-       <section id="inventory" class="py-40 px-10 max-w-[1400px] mx-auto relative z-20">
-            <h2 class="text-5xl font-light serif mb-32 reveal italic uppercase">The <span class="font-bold">Stable</span></h2>
-
-            <div class="grid md:grid-cols-3 gap-16">
-                <div class="reveal group cursor-pointer" onclick="openDetails('Honda Jazz 2014', '£8,500', '1.3L i-VTEC', ['hondajazz.jpg'])">
-                    <div class="glass-card p-4 mb-6 overflow-hidden">
-                        <img src="redhondajazz20142.jpg" class="product-image w-full">
+        <section id="inventory" class="py-48 px-10 max-w-[1500px] mx-auto relative z-20">
+            <h2 class="text-4xl font-light serif mb-32 reveal italic uppercase tracking-widest text-center">Current Selection</h2>
+            <div class="grid md:grid-cols-3 gap-20">
+                <div class="reveal group cursor-pointer" onclick="openDetails('Honda Jazz 2014', '£8,500', '1.3L i-VTEC', ['redhondajazz20142.jpg'])">
+                    <div class="aspect-[4/3] bg-white/5 p-4 mb-8 overflow-hidden transition-all duration-700 group-hover:bg-white/10">
+                        <img src="redhondajazz20142.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                     </div>
-                    <h3 class="text-lg serif italic">Honda Jazz 2014</h3>
+                    <h3 class="text-sm tracking-widest uppercase opacity-80">Honda Jazz 2014</h3>
                 </div>
-
-               <div class="reveal group cursor-pointer" 
-     onclick="openDetails('Nissan Micra', '£5,000', '1.2L Engine', ['nissanmicra/nmicra2.JPG', 'nissanmicra/nmicra3.JPG', 'nissanmicra/nmicra4.JPG'])">
-    <div class="glass-card p-4 mb-6 overflow-hidden">
-        <img src="nissanmicra/nmicra1.JPG" class="product-image w-full">
-    </div>
-    <h3 class="text-lg serif italic">Nissan Micra</h3>
-</div>
-
-                <div class="reveal group cursor-pointer" onclick="openDetails('Midnight Edition', '$85,500', 'Pure EV', ['https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800'])">
-                    <div class="glass-card p-4 mb-6 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" class="product-image w-full">
+                <div class="reveal group cursor-pointer" onclick="openDetails('Nissan Micra', '£5,000', '1.2L Engine', ['nissanmicra/nmicra1.JPG'])">
+                    <div class="aspect-[4/3] bg-white/5 p-4 mb-8 overflow-hidden transition-all duration-700 group-hover:bg-white/10">
+                        <img src="nissanmicra/nmicra1.JPG" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                     </div>
-                    <h3 class="text-lg serif italic">Midnight Edition</h3>
+                    <h3 class="text-sm tracking-widest uppercase opacity-80">Nissan Micra</h3>
                 </div>
-            </div>
-
-            <div id="extra-inventory" class="mt-16 grid md:grid-cols-3 gap-16 hidden">
-                <div class="reveal group cursor-pointer" onclick="openDetails('Phantom V', '$450,000', 'V12 Luxury', ['https://images.unsplash.com/photo-1631215104052-78d91c784992?auto=format&fit=crop&q=80&w=800'])">
-                    <div class="glass-card p-4 mb-6 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1631215104052-78d91c784992?auto=format&fit=crop&q=80&w=800" class="product-image w-full">
-                    </div>
-                    <h3 class="text-lg serif italic">Phantom V</h3>
-                </div>
-            </div>
-
-            <div class="mt-24 text-center">
-                <button id="viewMoreBtn" onclick="toggleViewMore()" class="text-[10px] tracking-[0.8em] uppercase opacity-40 hover:opacity-100 transition border-b border-white/20 pb-2">Discover More</button>
             </div>
         </section>
 
-        </div>
-
-    <div id="carModal" class="fixed inset-0 bg-black/95 z-[10000] hidden flex items-center justify-center p-6 backdrop-blur-md">
-        <div class="max-w-5xl w-full bg-neutral-900 p-8 rounded-lg relative border border-white/10 max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-white text-4xl hover:text-gray-400">&times;</button>
-            <h2 id="modalTitle" class="text-3xl serif italic mb-2 text-white"></h2>
-            <p id="modalPrice" class="text-gray-400 mb-8 tracking-widest uppercase text-sm"></p>
-            <div id="modalGallery" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                </div>
-            <button class="w-full mt-8 py-6 border border-white/10 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">Reserve This Piece</button>
-        </div>
-    </div>
-
-</section>
-
-        <section id="accessories" class="py-40 px-10 bg-[#080808] relative z-20">
-            <div class="max-w-[1400px] mx-auto">
-                <h2 class="text-5xl font-light serif mb-32 reveal italic text-right uppercase">Acce<span class="font-bold">ssories</span></h2>
-                <div class="grid md:grid-cols-4 gap-8">
-                    <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Stitched Leather</h4></div>
-                    <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1618453292459-53424b66bb6a?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Dash Chrono</h4></div>
-                    <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1508962914676-139429cf6978?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Bespoke Kit</h4></div>
-                    <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1590566107030-34b19c8576e9?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Racing Gloves</h4></div>
-                </div>
+        <section id="contact" class="py-60 bg-[#080808] relative z-20">
+            <div class="max-w-3xl mx-auto px-10 text-center reveal">
+                <h2 class="text-5xl font-light mb-16 serif italic">Inquire</h2>
+                <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="grid gap-4">
+                    <input type="text" name="Name" placeholder="NAME" required class="bg-transparent border-b border-white/10 p-4 text-xs tracking-widest focus:border-white outline-none transition">
+                    <input type="text" name="Request" placeholder="VEHICLE OF INTEREST" class="bg-transparent border-b border-white/10 p-4 text-xs tracking-widest focus:border-white outline-none transition">
+                    <button type="submit" class="mt-12 py-6 bg-white text-black text-[10px] font-bold tracking-[1em] hover:invert transition uppercase">Send Request</button>
+                </form>
             </div>
-
-        </section>
-        <section id="contact" class="py-60 px-10 relative z-20 text-center">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-5xl font-light tracking-tighter mb-4">START YOUR <b>JOURNEY</b></h2>
-                <p class="text-gray-500 text-sm">Our specialists respond within 60 minutes.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-20 items-start">
-                <div class="reveal">
-                    <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="space-y-6">
-                        <input type="text" name="Name" placeholder="NAME" required class="w-full p-5 rounded-xl text-sm tracking-widest">
-                        <input type="text" name="Vehicle" placeholder="INTERESTED VEHICLE" class="w-full p-5 rounded-xl text-sm tracking-widest">
-                        <textarea name="Message" placeholder="MESSAGE" rows="4" class="w-full p-5 rounded-xl text-sm tracking-widest"></textarea>
-
-                        <button type="submit" class="w-full bg-white text-black py-5 rounded-xl font-bold text-[10px] tracking-[0.3em] hover:bg-gray-200 transition">
-                            SEND INQUIRY
-                        </button>
-                    </form>
-                </div>
-                <div class="flex flex-col space-y-8 reveal" style="transition-delay: 0.2s;">
-                    <div>
-                        <h3 class="text-xs tracking-[0.3em] text-gray-500 mb-6 uppercase">Direct Channels</h3>
-                        <a href="tel:07738774109" class="group flex items-center justify-between border-b border-white/10 py-6">
-                            <span class="text-xl font-light">Call Specialist</span>
-                            <span class="text-gray-500 group-hover:text-white transition">07480446676 →</span>
-                        </a>
-                        <a href="https://wa.me/1234567890" class="group flex items-center justify-between border-b border-white/10 py-6">
-                            <span class="text-xl font-light">WhatsApp</span>
-                            <span class="text-gray-500 group-hover:text-white transition">Chat Now →</span>
-                        </a>
-                    </div>
-                    <div class="pt-6 opacity-40 text-[10px] tracking-widest uppercase">
-                        Private Showroom <br> By Appointment Only
-                    </div>
-                </div>
-            </div>
-        </div>
         </section>
     </div>
 
-    <div id="details-view" class="fixed inset-0 bg-[#050505] z-[10000] hidden overflow-y-auto p-10 md:p-24">
-        <button onclick="closeDetails()" class="text-[9px] tracking-[0.5em] uppercase opacity-40 hover:opacity-100 mb-20">← Close View</button>
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
-            <img id="det-img" src="" class="w-full shadow-2xl">
-            <div class="reveal active">
-                <h1 id="det-name" class="text-6xl serif italic mb-4"></h1>
-                <p id="det-price" class="text-xl text-gray-500 mb-12"></p>
-                <div class="border-t border-white/10 pt-10">
-                    <p id="det-engine" class="text-xl font-light mb-12 text-gray-300"></p>
-                    <button class="w-full py-6 border border-white/10 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">Reserve This Piece</button>
+    <div id="carModal" class="fixed inset-0 bg-black/98 z-[10000] hidden flex items-center justify-center backdrop-blur-xl transition-opacity duration-500">
+        <div class="w-full max-w-6xl p-10 relative overflow-y-auto max-h-screen">
+            <button onclick="closeModal()" class="fixed top-10 right-10 text-white text-2xl font-light opacity-50 hover:opacity-100">&times; CLOSE</button>
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div id="modalGallery" class="space-y-4"></div>
+                <div>
+                    <h2 id="modalTitle" class="text-6xl serif italic mb-4"></h2>
+                    <p id="modalPrice" class="text-xs tracking-[1em] uppercase text-gray-500 mb-12"></p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-12">Hand-selected for the Monacan collection. This vehicle has undergone rigorous prestige certification.</p>
+                    <button class="w-full py-6 border border-white/20 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">Request Private Viewing</button>
                 </div>
             </div>
         </div>
@@ -237,6 +140,7 @@
         const dot = document.getElementById('status-dot');
         let playing = false;
 
+        // Typewriter Engine
         async function typeEffect(element, text, speed) {
             if (!element) return;
             element.innerHTML = '';
@@ -259,31 +163,33 @@
             });
         }
 
+        // Handle Track Transition
         t1.onended = () => { if (playing) t2.play(); };
 
         async function startExperience() {
-            // Fix for browser audio policies
-            if (window.AudioContext || window.webkitAudioContext) {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-            }
+            // Unlock Audio Context (Crucial for 2026 Browsers)
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
 
+            // Reveal Content
             document.getElementById('enter-overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('enter-overlay').style.display = 'none';
                 document.getElementById('main-site').classList.add('visible');
-                if(window.innerWidth > 768) car.style.opacity = '0.25';
+                if(window.innerWidth > 768) car.style.opacity = '0.3';
             }, 1000);
 
+            // Play Engine and Sequence Atmosphere
             playing = true;
-            t1.play().catch(e => console.log("Audio play blocked", e));
-            t2.play().then(() => t2.pause());
-
+            t1.play().catch(() => console.log("User must interact first"));
+            
             mText.innerText = "Atmosphere On";
             dot.classList.replace('bg-red-500', 'bg-green-500');
+            dot.classList.add('animate-pulse');
 
-            await typeEffect(document.getElementById('hero-title'), "The Rhythm of the Road.", 60);
-            await typeEffect(document.getElementById('hero-subtitle'), "Curating the Exceptional", 40);
+            // Sequential Typewriting
+            await typeEffect(document.getElementById('hero-title'), "The Rhythm of the Road.", 70);
+            await typeEffect(document.getElementById('hero-subtitle'), "Curating the Exceptional", 50);
         }
 
         function toggleMusic() {
@@ -291,10 +197,12 @@
                 t1.pause(); t2.pause();
                 mText.innerText = "Atmosphere Off";
                 dot.classList.replace('bg-green-500', 'bg-red-500');
+                dot.classList.remove('animate-pulse');
             } else {
                 if (t1.currentTime > 0 && !t1.ended) t1.play(); else t2.play();
                 mText.innerText = "Atmosphere On";
                 dot.classList.replace('bg-red-500', 'bg-green-500');
+                dot.classList.add('animate-pulse');
             }
             playing = !playing;
         }
@@ -307,7 +215,7 @@
             images.forEach(src => {
                 const img = document.createElement('img');
                 img.src = src;
-                img.className = "w-full h-64 object-cover rounded border border-white/5";
+                img.className = "w-full aspect-video object-cover border border-white/5";
                 gallery.appendChild(img);
             });
             document.getElementById('carModal').classList.remove('hidden');
@@ -319,22 +227,22 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Parallax Mouse Follower
         document.addEventListener('mousemove', (e) => {
             if (window.innerWidth <= 768) return;
-            car.style.left = `${e.clientX - 100}px`;
-            car.style.top = `${e.clientY - 60}px`;
-            const rX = (window.innerHeight / 2 - e.clientY) / 35;
-            const rY = (window.innerWidth / 2 - e.clientX) / 35;
-            car.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg)`;
+            const x = e.clientX;
+            const y = e.clientY;
+            car.style.transform = `translate(${x - 110}px, ${y - 60}px) rotate(${(x - window.innerWidth/2)/100}deg)`;
         });
 
-        const reveal = () => {
-            document.querySelectorAll('.reveal').forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight * 0.85) el.classList.add('active');
+        // Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        };
-        window.addEventListener('scroll', reveal);
-        reveal();
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
