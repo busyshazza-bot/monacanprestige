@@ -143,8 +143,9 @@
             <p id="modalPrice" class="text-gray-400 mb-8 tracking-widest uppercase text-sm"></p>
             <div id="modalGallery" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 </div>
-            <button class="w-full mt-8 py-6 border border-white/10 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">Reserve This Piece</button>
-        </div>
+            <button onclick="reserveCar(true)" class="w-full mt-8 py-6 border border-white/10 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">
+    Reserve This Piece
+</button>
     </div>
 
 </section>
@@ -172,7 +173,7 @@
                 <div class="reveal">
                     <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="space-y-6">
                         <input type="text" name="Name" placeholder="NAME" required class="w-full p-5 rounded-xl text-sm tracking-widest">
-                        <input type="text" name="Vehicle" placeholder="INTERESTED VEHICLE" class="w-full p-5 rounded-xl text-sm tracking-widest">
+                        <input type="text" id="vehicleInput" name="Vehicle" placeholder="INTERESTED VEHICLE" class="w-full p-5 rounded-xl text-sm tracking-widest">
                         <textarea name="Message" placeholder="MESSAGE" rows="4" class="w-full p-5 rounded-xl text-sm tracking-widest"></textarea>
 
                         <button type="submit" class="w-full bg-white text-black py-5 rounded-xl font-bold text-[10px] tracking-[0.3em] hover:bg-gray-200 transition">
@@ -211,7 +212,9 @@
                 <p id="det-price" class="text-xl text-gray-500 mb-12"></p>
                 <div class="border-t border-white/10 pt-10">
                     <p id="det-engine" class="text-xl font-light mb-12 text-gray-300"></p>
-                    <button class="w-full py-6 border border-white/10 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">Reserve This Piece</button>
+                    <button onclick="reserveCar(false)" class="w-full py-6 border border-white/10 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">
+    Reserve This Piece
+</button>
                 </div>
             </div>
         </div>
@@ -268,6 +271,24 @@
             }
             playing = !playing;
         }
+
+        function reserveCar(isModal = false) {
+    // 1. Get the car name from the active view
+    let carName = "";
+    if (isModal) {
+        carName = document.getElementById('modalTitle').innerText;
+        closeModal();
+    } else {
+        carName = document.getElementById('det-name').innerText;
+        closeDetails();
+    }
+
+    // 2. Put the name into the form
+    document.getElementById('vehicleInput').value = carName;
+
+    // 3. Smooth scroll to contact section
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+}
 
         // Inventory Logic
         function openDetails(name, price, engine, images) {
