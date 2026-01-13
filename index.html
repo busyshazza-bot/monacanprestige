@@ -48,6 +48,15 @@
         .glass-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); }
         #extra-inventory { display: none; }
         .hero-text-shadow { text-shadow: 0px 4px 20px rgba(0,0,0,0.6); }
+        .type-cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: white;
+            margin-left: 4px;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
 </head>
 <body>
@@ -224,6 +233,28 @@
         const dot = document.getElementById('status-dot');
         let playing = false;
 
+        async function typeEffect(element, text, speed) {
+            return new Promise(resolve => {
+                let i = 0;
+                element.innerHTML = ''; 
+                const cursor = document.createElement('span');
+                cursor.className = 'type-cursor';
+                element.appendChild(cursor);
+
+                function type() {
+                    if (i < text.length) {
+                        cursor.before(text.charAt(i));
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        cursor.remove();
+                        resolve();
+                    }
+                }
+                type();
+            });
+        }
+
         // SEQUENCE LOGIC: When engine (t1) ends, start music (t2)
         t1.onended = function() {
             if (playing) {
@@ -233,10 +264,18 @@
 
         function startExperience() {
             document.getElementById('enter-overlay').style.opacity = '0';
+            
             setTimeout(() => { 
                 document.getElementById('enter-overlay').style.display = 'none'; 
                 document.getElementById('main-site').style.opacity = '1';
                 document.getElementById('floating-car').style.opacity = '0.25'; 
+            }, 1000);
+            // TRIGGER TYPEWRITER SEQUENCE
+                const title = document.getElementById('hero-title');
+                const sub = document.getElementById('hero-subtitle');
+            await typeEffect(title, "The Rhythm of the Road.", 70);
+                await typeEffect(sub, "Curating the Exceptional", 40);
+                
             }, 1000);
 
             // Start the sequence: Engine first
