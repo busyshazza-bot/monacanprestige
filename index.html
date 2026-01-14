@@ -3,17 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MONACAN</title>
     <title>MONACAN PRESTIGE</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,700&family=Inter:wght@100;300;600&display=swap" rel="stylesheet">
-@@ -54,281 +54,283 @@
+
+    <style>
+        :root { --obsidian: #050505; }
+        body { background-color: var(--obsidian); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; margin: 0; }
+        h1, h2, h3, h4, .serif { font-family: 'Bodoni Moda', serif; }
+
+        #enter-overlay {
+            position: fixed; inset: 0; background: #000000; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        #floating-car {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 200px; /* Your new smaller size */
+    z-index: 5; 
+    pointer-events: none; 
+    opacity: 0; 
+    /* Reduced shadow size to match the 200px car */
+    filter: drop-shadow(0 15px 25px rgba(1,1,1,1));
+    transition: transform 0.1s linear, opacity 1s ease;
+}
+
+        .hero-bg-road {
+            position: absolute; inset: 0;
+            background-image: url('welcome.png');
+            background-size: cover; background-position: center;
+            filter: brightness(0.5) contrast(1.1); z-index: 0;
+        }
+
+        .product-image { filter: grayscale(100%) brightness(0.6); transition: 0.8s ease; }
+        .group:hover .product-image { filter: grayscale(0%) brightness(1); transform: scale(1.02); }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .glass-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); }
+        #extra-inventory { display: none; }
+        .hero-text-shadow { text-shadow: 0px 4px 20px rgba(0,0,0,0.6); }
+    </style>
+</head>
+<body>
 
     <img id="floating-car" src="https://pngimg.com/d/porsche_PNG10620.png" alt="Porsche Cursor">
 
-    <div id="enter-overlay">
-        <div class="text-[10px] tracking-[1.5em] mb-12 opacity-30 uppercase">The House of Monacans</div>
     <div id="enter-overlay" class="fixed inset-0 flex flex-col items-center justify-center text-center">
     <div class="text-[10px] tracking-[1.5em] -mr-[1.5em] mb-12 opacity-30 uppercase">
         The House of Monacans
@@ -145,7 +185,7 @@
                         <h3 class="text-xs tracking-[0.3em] text-gray-500 mb-6 uppercase">Direct Channels</h3>
                         <a href="tel:07738774109" class="group flex items-center justify-between border-b border-white/10 py-6">
                             <span class="text-xl font-light">Call Specialist</span>
-                            <span class="text-gray-500 group-hover:text-white transition">07738774109 →</span>
+                            <span class="text-gray-500 group-hover:text-white transition">07480446676 →</span>
                         </a>
                         <a href="https://wa.me/1234567890" class="group flex items-center justify-between border-b border-white/10 py-6">
                             <span class="text-xl font-light">WhatsApp</span>
