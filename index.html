@@ -48,199 +48,63 @@
         .glass-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); }
         #extra-inventory { display: none; }
         .hero-text-shadow { text-shadow: 0px 4px 20px rgba(0,0,0,0.6); }
+        .type-cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: white;
+            margin-left: 4px;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
 </head>
 <body>
-
-    <img id="floating-car" src="https://pngimg.com/d/porsche_PNG10620.png" alt="Porsche Cursor">
-
-    <div id="enter-overlay" class="fixed inset-0 flex flex-col items-center justify-center text-center">
-    <div class="text-[10px] tracking-[1.5em] -mr-[1.5em] mb-12 opacity-30 uppercase">
-        The House of Monacans
-    </div>
-        <button onclick="startExperience()" class="px-14 py-6 border border-white/20 text-[10px] tracking-[0.8em] hover:bg-white hover:text-black transition-all duration-700 uppercase">
-            Begin Experience
-        </button>
-    </div>
-
-    <div id="main-site" style="opacity: 0;">
-        <nav class="fixed w-full z-[100] px-10 py-8 flex justify-between items-center mix-blend-difference">
-    <div class="text-xl font-light tracking-[0.3em] uppercase serif hero-text-shadow">MONACAN PRESTIGE</div>
-
-    <div class="hidden md:flex gap-12 text-[8px] uppercase tracking-[0.4em]">
-        <a href="#inventory" class="hover:opacity-40 transition">Our Cars</a>
-        <a href="#accessories" class="hover:opacity-40 transition">Accessories</a>
-        <a href="#contact" class="hover:opacity-40 transition">Contact Us</a>
-    </div>
-</nav>
-
-        <header class="h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
-            <div class="hero-bg-road"></div>
-
-            <audio id="track1" preload="auto"><source src="enginesound.m4a" type="audio/mp4"></audio>
-            <audio id="track2" loop preload="auto"><source src="myeyes.m4a" type="audio/mp4"></audio>
-
-            <div class="relative z-10 reveal active px-4">
-                <h1 class="text-6xl md:text-[7xl] font-bold tracking-tighter leading-none mb-6 italic uppercase">The Rhythm of the Road.</h1>
-                <p class="text-gray-400 text-[11px] tracking-[1.5em] uppercase font-light">Curating the Exceptional</p>
-            </div>
-
-            <div onclick="toggleMusic()" class="absolute bottom-12 right-12 z-[100] cursor-pointer group">
-                <div class="flex items-center gap-4 border border-white/10 px-6 py-3 rounded-full hover:bg-white/10 transition">
-                    <div id="status-dot" class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
-                    <span id="musicText" class="text-[8px] tracking-[0.4em] uppercase opacity-50">Atmosphere Off</span>
-                </div>
-            </div>
-        </header>
-
-       <section id="inventory" class="py-40 px-10 max-w-[1400px] mx-auto relative z-20">
-            <h2 class="text-5xl font-light serif mb-32 reveal italic uppercase">The <span class="font-bold">Stable</span></h2>
-
-            <div class="grid md:grid-cols-3 gap-16">
-                <div class="reveal group cursor-pointer" onclick="openDetails('Honda Jazz 2014', '£8,500', '1.3L i-VTEC', ['hondajazz.jpg'])">
-                    <div class="glass-card p-4 mb-6 overflow-hidden">
-                        <img src="redhondajazz20142.jpg" class="product-image w-full">
-                    </div>
-                    <h3 class="text-lg serif italic">Honda Jazz 2014</h3>
-                </div>
-
-               <div class="reveal group cursor-pointer" 
-     onclick="openDetails('Nissan Micra', '£5,000', '1.2L Engine', ['nissanmicra/nmicra2.JPG', 'nissanmicra/nmicra3.JPG', 'nissanmicra/nmicra4.JPG'])">
-    <div class="glass-card p-4 mb-6 overflow-hidden">
-        <img src="nissanmicra/nmicra1.JPG" class="product-image w-full">
-    </div>
-    <h3 class="text-lg serif italic">Nissan Micra</h3>
-</div>
-
-                <div class="reveal group cursor-pointer" onclick="openDetails('Midnight Edition', '$85,500', 'Pure EV', ['https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800'])">
-                    <div class="glass-card p-4 mb-6 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" class="product-image w-full">
-                    </div>
-                    <h3 class="text-lg serif italic">Midnight Edition</h3>
-                </div>
-            </div>
-
-            <div id="extra-inventory" class="mt-16 grid md:grid-cols-3 gap-16 hidden">
-                <div class="reveal group cursor-pointer" onclick="openDetails('Phantom V', '$450,000', 'V12 Luxury', ['https://images.unsplash.com/photo-1631215104052-78d91c784992?auto=format&fit=crop&q=80&w=800'])">
-                    <div class="glass-card p-4 mb-6 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1631215104052-78d91c784992?auto=format&fit=crop&q=80&w=800" class="product-image w-full">
-                    </div>
-                    <h3 class="text-lg serif italic">Phantom V</h3>
-                </div>
-            </div>
-
-            <div class="mt-24 text-center">
-                <button id="viewMoreBtn" onclick="toggleViewMore()" class="text-[10px] tracking-[0.8em] uppercase opacity-40 hover:opacity-100 transition border-b border-white/20 pb-2">Discover More</button>
-            </div>
-        </section>
-
-        </div>
-
-    <div id="carModal" class="fixed inset-0 bg-black/95 z-[10000] hidden flex items-center justify-center p-6 backdrop-blur-md">
-        <div class="max-w-5xl w-full bg-neutral-900 p-8 rounded-lg relative border border-white/10 max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-white text-4xl hover:text-gray-400">&times;</button>
-            <h2 id="modalTitle" class="text-3xl serif italic mb-2 text-white"></h2>
-            <p id="modalPrice" class="text-gray-400 mb-8 tracking-widest uppercase text-sm"></p>
-            <div id="modalGallery" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                </div>
-            <button onclick="reserveCar(true)" class="w-full mt-8 py-6 border border-white/10 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">
-    Reserve This Piece
-</button>
-    </div>
-
-</section>
-
-        <section id="accessories" class="py-40 px-10 bg-[#080808] relative z-20">
-            <div class="max-w-[1400px] mx-auto">
-                <h2 class="text-5xl font-light serif mb-32 reveal italic text-right uppercase">Acce<span class="font-bold">ssories</span></h2>
-                <div class="grid md:grid-cols-4 gap-8">
-                    <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Stitched Leather</h4></div>
-                    <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1618453292459-53424b66bb6a?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Dash Chrono</h4></div>
-                    <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1508962914676-139429cf6978?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Bespoke Kit</h4></div>
-                    <div class="reveal group"><div class="aspect-[3/4] overflow-hidden glass-card mb-6"><img src="https://images.unsplash.com/photo-1590566107030-34b19c8576e9?auto=format&fit=crop&q=80&w=600" class="product-image w-full h-full object-cover"></div><h4 class="text-md serif italic">Racing Gloves</h4></div>
-                </div>
-            </div>
-
-        </section>
-        <section id="contact" class="py-60 px-10 relative z-20 text-center">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-5xl font-light tracking-tighter mb-4">START YOUR <b>JOURNEY</b></h2>
-                <p class="text-gray-500 text-sm">Our specialists respond within 60 minutes.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-20 items-start">
-                <div class="reveal">
-                    <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="space-y-6">
-                        <input type="text" name="Name" placeholder="NAME" required class="w-full p-5 rounded-xl text-sm tracking-widest">
-                        <input type="text" id="vehicleInput" name="Vehicle" placeholder="INTERESTED VEHICLE" class="w-full p-5 rounded-xl text-sm tracking-widest">
-                        <textarea name="Message" placeholder="MESSAGE" rows="4" class="w-full p-5 rounded-xl text-sm tracking-widest"></textarea>
-
-                        <button type="submit" class="w-full bg-white text-black py-5 rounded-xl font-bold text-[10px] tracking-[0.3em] hover:bg-gray-200 transition">
-                            SEND INQUIRY
-                        </button>
-                    </form>
-                </div>
-                <div class="flex flex-col space-y-8 reveal" style="transition-delay: 0.2s;">
-                    <div>
-                        <h3 class="text-xs tracking-[0.3em] text-gray-500 mb-6 uppercase">Direct Channels</h3>
-                        <a href="tel:07738774109" class="group flex items-center justify-between border-b border-white/10 py-6">
-                            <span class="text-xl font-light">Call Specialist</span>
-                            <span class="text-gray-500 group-hover:text-white transition">07738774109 →</span>
-                            <span class="text-gray-500 group-hover:text-white transition">07480446676 →</span>
-                        </a>
-                        <a href="https://wa.me/1234567890" class="group flex items-center justify-between border-b border-white/10 py-6">
-                            <span class="text-xl font-light">WhatsApp</span>
-                            <span class="text-gray-500 group-hover:text-white transition">Chat Now →</span>
-                        </a>
-                    </div>
-                    <div class="pt-6 opacity-40 text-[10px] tracking-widest uppercase">
-                        Private Showroom <br> By Appointment Only
-                    </div>
-                </div>
-            </div>
-        </div>
-        </section>
-    </div>
-
-    <div id="details-view" class="fixed inset-0 bg-[#050505] z-[10000] hidden overflow-y-auto p-10 md:p-24">
-        <button onclick="closeDetails()" class="text-[9px] tracking-[0.5em] uppercase opacity-40 hover:opacity-100 mb-20">← Close View</button>
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
-            <img id="det-img" src="" class="w-full shadow-2xl">
-            <div class="reveal active">
-                <h1 id="det-name" class="text-6xl serif italic mb-4"></h1>
-                <p id="det-price" class="text-xl text-gray-500 mb-12"></p>
-                <div class="border-t border-white/10 pt-10">
-                    <p id="det-engine" class="text-xl font-light mb-12 text-gray-300"></p>
-                    <button onclick="reserveCar(false)" class="w-full py-6 border border-white/10 text-[9px] tracking-[1em] hover:bg-white hover:text-black transition uppercase">
-    Reserve This Piece
-</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const car = document.getElementById('floating-car');
-        const t1 = document.getElementById('track1');
-        const t2 = document.getElementById('track2');
-        const mText = document.getElementById('musicText');
+@@ -224,6 +233,28 @@
         const dot = document.getElementById('status-dot');
         let playing = false;
+
+        async function typeEffect(element, text, speed) {
+            return new Promise(resolve => {
+                let i = 0;
+                element.innerHTML = ''; 
+                const cursor = document.createElement('span');
+                cursor.className = 'type-cursor';
+                element.appendChild(cursor);
+
+                function type() {
+                    if (i < text.length) {
+                        cursor.before(text.charAt(i));
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        cursor.remove();
+                        resolve();
+                    }
+                }
+                type();
+            });
+        }
 
         // SEQUENCE LOGIC: When engine (t1) ends, start music (t2)
         t1.onended = function() {
             if (playing) {
-                t2.play();
-            }
-        };
+@@ -233,104 +264,112 @@
 
         function startExperience() {
             document.getElementById('enter-overlay').style.opacity = '0';
+            
             setTimeout(() => { 
                 document.getElementById('enter-overlay').style.display = 'none'; 
                 document.getElementById('main-site').style.opacity = '1';
                 document.getElementById('floating-car').style.opacity = '0.25'; 
+            }, 1000);
+            // TRIGGER TYPEWRITER SEQUENCE
+                const title = document.getElementById('hero-title');
+                const sub = document.getElementById('hero-subtitle');
+            await typeEffect(title, "The Rhythm of the Road.", 70);
+                await typeEffect(sub, "Curating the Exceptional", 40);
+                
             }, 1000);
 
             // Start the sequence: Engine first
@@ -271,24 +135,6 @@
             }
             playing = !playing;
         }
-
-        function reserveCar(isModal = false) {
-    // 1. Get the car name from the active view
-    let carName = "";
-    if (isModal) {
-        carName = document.getElementById('modalTitle').innerText;
-        closeModal();
-    } else {
-        carName = document.getElementById('det-name').innerText;
-        closeDetails();
-    }
-
-    // 2. Put the name into the form
-    document.getElementById('vehicleInput').value = carName;
-
-    // 3. Smooth scroll to contact section
-    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-}
 
         // Inventory Logic
         function openDetails(name, price, engine, images) {
