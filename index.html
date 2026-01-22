@@ -93,7 +93,7 @@
             </div>
         </header>
 
-     <section id="inventory" class="py-40 px-10 max-w-[1400px] mx-auto relative z-20">
+ <section id="inventory" class="py-40 px-10 max-w-[1400px] mx-auto relative z-20">
     <h2 class="text-5xl font-light serif mb-32 reveal italic uppercase">The <span class="font-bold">Stable</span></h2>
 
     <div class="grid md:grid-cols-3 gap-16">
@@ -111,7 +111,7 @@
             <h3 class="text-lg serif italic">Nissan Micra</h3>
         </div>
 
-        <div class="reveal group cursor-pointer" onclick="openDetails('BMW 7 SERIES', '$87,000', '- CAN CHANGE DEPENDING ON YEAR', ['https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800'])">
+        <div class="reveal group cursor-pointer" onclick="openDetails('BMW 7 SERIES', '$87,000', 'Luxury Sedan', ['https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800'])">
             <div class="glass-card p-4 mb-6 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" class="product-image w-full">
             </div>
@@ -121,14 +121,14 @@
 
     <div id="extra-inventory" class="mt-16 grid md:grid-cols-3 gap-16 hidden">
         
-        <div class="reveal group cursor-pointer" onclick="openDetails('2020 Mercedes A250', '£24,995', '...', [...])">
+        <div class="reveal group cursor-pointer" onclick="openDetails('2020 Mercedes A250', '£24,995', '2.0L Turbo', [])">
             <div class="glass-card p-4 mb-6 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1631215104052-78d91c784992?auto=format&fit=crop&q=80&w=800" class="product-image w-full">
             </div>
             <h3 class="text-lg serif italic">Mercedes A250</h3>
         </div>
 
-        <div class="reveal group cursor-pointer" onclick="openDetails('2011-2017 VW Polo', 'FROM £5,995', '...', [...])">
+        <div class="reveal group cursor-pointer" onclick="openDetails('2011-2017 VW Polo', 'FROM £5,995', '1.2L - 1.4L', [])">
             <div class="glass-card p-4 mb-6 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1631215104052-78d91c784992?auto=format&fit=crop&q=80&w=800" class="product-image w-full">
             </div>
@@ -148,29 +148,24 @@
             </div>
             <h3 class="text-lg serif italic">Audi A1</h3>
         </div>
-    </div>
 
-         <div class="reveal group cursor-pointer" onclick="openDetails('2012-2025 Honda Civic Type R', 'FROM £9,995', '1.4L', ['audi/audia1.png', 'audi/audia12.png'])">
+        <div class="reveal group cursor-pointer" onclick="openDetails('2012-2025 Honda Civic Type R', 'FROM £9,995', '2.0L VTEC', ['audi/audia1.png', 'audi/audia12.png'])">
             <div class="glass-card p-4 mb-6 overflow-hidden">
                 <img src="audi/audia12.png" class="product-image w-full">
             </div>
             <h3 class="text-lg serif italic">Honda Civic Type R</h3>
         </div>
-    </div>
 
-    <div class="reveal group cursor-pointer" onclick="openDetails('2025 Range Rover Autobiography', 'FROM £125,000', '3L', ['audi/audia1.png', 'audi/audia12.png'])">
+        <div class="reveal group cursor-pointer" onclick="openDetails('2025 Range Rover Autobiography P460E', 'FROM £125,000', '3L Hybrid', ['audi/audia1.png', 'audi/audia12.png'])">
             <div class="glass-card p-4 mb-6 overflow-hidden">
                 <img src="audi/audia12.png" class="product-image w-full">
             </div>
-            <h3 class="text-lg serif italic">2025 Range Rover Autobiography P460E</h3>
+            <h3 class="text-lg serif italic">Range Rover Autobiography P460E</h3>
         </div>
-    </div>
-
-    <div class="mt-24 text-center">
+    </div> <div class="mt-24 text-center">
         <button id="viewMoreBtn" onclick="toggleViewMore()" class="text-[10px] tracking-[0.8em] uppercase opacity-40 hover:opacity-100 transition border-b border-white/20 pb-2">Discover More</button>
     </div>
 </section>
-        </div>
 
     <div id="carModal" class="fixed inset-0 bg-black/95 z-[10000] hidden flex items-center justify-center p-6 backdrop-blur-md">
         <div class="max-w-5xl w-full bg-neutral-900 p-8 rounded-lg relative border border-white/10 max-h-[90vh] overflow-y-auto">
