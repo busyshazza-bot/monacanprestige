@@ -125,6 +125,7 @@
 
     <div class="nav-dock" id="dock">
         <div class="dock-item" onclick="openInventory()">The Stable</div>
+        <div class="dock-item" onclick="openAccessories()">The Vault</div>
         <div class="dock-item" onclick="openInquiry()">Inquiry</div>
     </div>
 
@@ -133,11 +134,9 @@
 
     <script>
         const cars = [
-            // HIGH END
             { name: "Porsche 911 Targa", price: "From £160,000", cat: "Elite", engine: "3.0L", img: "porschetarga/targa1.jpg" },
             { name: "Range Rover Autobiography", price: "From £125,000", cat: "Elite", engine: "3.0L Hybrid", img: "rangerover/rangerover1.png" },
             { name: "BMW 7 Series", price: "£87,000", cat: "Elite", engine: "3.0L", img: "bmw7series/bmw1.jpg" },
-            // NORMAL / PERFORMANCE
             { name: "Mercedes A250e", price: "£24,995", cat: "Performance", engine: "2.0L Hybrid", img: "mercedeza250e/merc1.png" },
             { name: "Honda Civic Type R", price: "From £9,995", cat: "Performance", engine: "2.0L VTEC", img: "hondar/hondar1.jpg" },
             { name: "VW Golf", price: "£5,995", cat: "Performance", engine: "1.2L Upwards", img: "vwgolf2014/vwgolf20141.jpg" },
@@ -148,9 +147,17 @@
             { name: "Honda Jazz 2014", price: "£7,995", cat: "Performance", engine: "1.3L i-VTEC", img: "rhjazz14/rhjazz1.jpg" }
         ];
 
+        const accessories = [
+            { name: "Winter Performance Kit", price: "£1,200", desc: "High-grip alpine tyres & thermal covers", img: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=800" },
+            { name: "Carbon Fiber Aero", price: "£3,450", desc: "Lightweight mirror caps and rear diffuser", img: "https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?auto=format&fit=crop&q=80&w=800" },
+            { name: "Monacan Signature Cover", price: "£450", desc: "Satin-weave indoor protection", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
+            { name: "Forged Alloy Wheels", price: "£2,800", desc: "21-inch Matte Obsidian finish", img: "https://images.unsplash.com/photo-1552651105-339327883726?auto=format&fit=crop&q=80&w=800" }
+        ];
+
         function beginExperience() {
-            document.getElementById('track1').play();
-            document.getElementById('track1').onended = () => document.getElementById('track2').play();
+            // Audio commented out for local preview safety if files missing
+            // document.getElementById('track1').play();
+            // document.getElementById('track1').onended = () => document.getElementById('track2').play();
 
             gsap.to("#entrance", { opacity: 0, duration: 1.5, onComplete: () => {
                 document.getElementById('entrance').style.display = 'none';
@@ -170,26 +177,43 @@
             content.innerHTML = `
                 <div class="category-tag">THE ELITE SELECTION</div>
                 <div class="grid md:grid-cols-3 gap-10 mb-24">
-                    ${elite.map(car => renderCar(car)).join('')}
+                    ${elite.map(car => renderItem(car)).join('')}
                 </div>
                 <div class="category-tag">THE PERFORMANCE RANGE</div>
                 <div class="grid md:grid-cols-3 gap-10">
-                    ${normal.map(car => renderCar(car)).join('')}
+                    ${normal.map(car => renderItem(car)).join('')}
                 </div>
             `;
             document.getElementById('page-layer').classList.add('active');
         }
 
-        function renderCar(car) {
+        function openAccessories() {
+            const content = document.getElementById('page-content');
+            document.getElementById('page-title').innerText = "The Vault";
+            document.getElementById('page-subtitle').innerText = "Bespoke Equipment";
+
+            content.innerHTML = `
+                <div class="category-tag">ESSENTIAL ACCESSORIES</div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    ${accessories.map(acc => renderItem(acc, true)).join('')}
+                </div>
+            `;
+            document.getElementById('page-layer').classList.add('active');
+        }
+
+        function renderItem(item, isAcc = false) {
             return `
                 <div class="glass-card p-6 group cursor-pointer">
-                    <div class="aspect-video overflow-hidden mb-6 bg-white/5">
-                        <img src="${car.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" onerror="this.src='comingsoon.jpg'">
+                    <div class="aspect-square overflow-hidden mb-6 bg-white/5 relative">
+                        <img src="${item.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" onerror="this.src='https://via.placeholder.com/400x400/111/fff?text=IMAGE+PENDING'">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="text-[8px] tracking-[4px] border border-white/40 px-4 py-2">DETAILS</span>
+                        </div>
                     </div>
-                    <h3 class="serif italic text-2xl mb-1">${car.name}</h3>
+                    <h3 class="serif italic text-xl mb-1">${item.name}</h3>
                     <div class="flex justify-between items-center opacity-40 text-[9px] tracking-widest uppercase">
-                        <span>${car.engine}</span>
-                        <span>${car.price}</span>
+                        <span>${isAcc ? item.desc : item.engine}</span>
+                        <span class="text-white opacity-100">${item.price}</span>
                     </div>
                 </div>
             `;
@@ -202,14 +226,10 @@
                 <div class="max-w-4xl mx-auto">
                     <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="grid md:grid-cols-2 gap-6">
                         <input type="text" name="Name" placeholder="FULL NAME" required class="form-input">
-                        <input type="text" name="Vehicle" placeholder="VEHICLE OF INTEREST" class="form-input">
+                        <input type="text" name="Vehicle" placeholder="VEHICLE OR ACCESSORY" class="form-input">
                         <textarea name="Message" placeholder="MESSAGE" class="form-input md:col-span-2" rows="5"></textarea>
                         <button type="submit" class="md:col-span-2 bg-white text-black py-6 text-[10px] tracking-[1em] font-bold hover:bg-zinc-200 transition">SEND INQUIRY</button>
                     </form>
-                    <div class="mt-20 grid md:grid-cols-2 gap-10 opacity-40 text-[9px] tracking-[4px] uppercase text-center">
-                        <div>TEL: 07480446676</div>
-                        <div>Showroom by appointment only</div>
-                    </div>
                 </div>
             `;
             document.getElementById('page-layer').classList.add('active');
@@ -219,7 +239,6 @@
             document.getElementById('page-layer').classList.remove('active');
         }
 
-        // Handle Escape Key
         document.addEventListener('keydown', (e) => {
             if (e.key === "Escape") closePage();
         });
@@ -239,7 +258,6 @@
         }
         init(); draw();
 
-        // Mouse Smoothing
         const carImg = document.getElementById('floating-car');
         document.addEventListener('mousemove', (e) => {
             gsap.to(carImg, { x: e.clientX - 80, y: e.clientY - 40, duration: 0.8, ease: "power2.out" });
