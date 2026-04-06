@@ -3,7 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MONACAN PRESTIGE | Local Car Sales</title><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MONACAN PRESTIGE | Local Car Sales</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,700&family=Plus+Jakarta+Sans:wght@200;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root { 
+            --obsidian: #050505; 
+            --accent: #ffffff;
+            --glass: rgba(255, 255, 255, 0.02);
+            --transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        body, html { 
+            margin: 0; padding: 0; 
+            /* UPDATED: Added welcome.png as background */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('welcome.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; 
+            overflow: hidden; height: 100%;
+        }
+
+        h1, h2, h3, .serif { font-family: 'Bodoni Moda', serif; }
+
+        /* UPDATED: Increased opacity slightly for better "atmosphere" */
+        #canvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.6; }
+
+        #floating-car {
+            position: fixed; width: 160px; z-index: 9999; pointer-events: none;
+            opacity: 0; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
+        }
+
+        #entrance {
+            position: fixed; inset: 0; z-index: 10000; background: #000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        .page-layer {
+            position: fixed; inset: 0; z-index: 50; 
+            background: rgba(5, 5, 5, 0.98);
+            display: none; overflow-y: auto; padding: 10vh 8vw;
+            backdrop-filter: blur(60px);
+            clip-path: circle(0% at 50% 50%);
+            transition: clip-path 1.2s cubic-bezier(0.9, 0, 0.1, 1);
+        }
+        .page-layer.active { display: block; clip-path: circle(150% at 50% 50%); }
+
+        .nav-dock {
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+            z-index: 1000; background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.08);
+            padding: 14px 45px; border-radius: 100px; display: flex; gap: 40px;
+            opacity: 0; transform: translate(-50%, 30px);
+        }
+
+        .dock-item {
+            font-size: 9px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 4px; cursor: pointer; color: rgba(255,255,255,0.4);
+            transition: var(--transition);
+        }
+        .dock-item:hover { color: #fff; letter-spacing: 6px; }
+
+        .glass-card { 
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.05); 
+            transition: var(--transition);
+        }
+        .glass-card:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); }
+
+        .form-input {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px; width: 100%; border-radius: 4px; color: white; outline: none;
+            transition: 0.4s; font-size: 12px; letter-spacing: 2px;
+        }
+        .form-input:focus { border-color: white; background: rgba(255,255,255,0.06); }
+
+        .category-tag {
+            font-size: 10px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+            border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 40px;
+        }
+
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+
+    <img id="floating-car" src="https://pngimg.com/d/porsche_PNG10620.png" alt="Car">
+    <canvas id="canvas"></canvas>
+
+    <div id="entrance">
+        <h1 class="text-[10px] tracking-[2.5em] mb-12 opacity-30 uppercase text-white -mr-[2.5em]">Loading Our Cars</h1>
+        <button onclick="beginExperience()" class="group relative px-16 py-7 border border-white/10 overflow-hidden transition-all duration-700">
+            <span class="relative z-10 text-[10px] tracking-[1em] uppercase text-white group-hover:text-black transition-colors">Enter Showroom</span>
+            <div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+        </button>
+    </div>
+
+    <nav class="fixed top-0 w-full px-12 py-10 flex justify-between items-center z-[100] mix-blend-difference">
+        <div class="text-2xl serif tracking-[0.2em] uppercase">MONACAN PRESTIGE</div>
+        <div id="clock" class="text-[9px] tracking-[5px] uppercase opacity-50">00:00:00</div>
+    </nav>
+
+    <main id="hero" class="h-screen flex flex-col justify-center items-center relative text-center">
+        <div class="relative z-10 px-6">
+            <h1 class="text-6xl md:text-9xl font-bold tracking-tighter italic uppercase mb-6 leading-none" id="hero-title">
+                Reliable Cars.<br><span class="text-transparent" style="-webkit-text-stroke: 1px white;">Fair Prices.</span>
+            </h1>
+            <p class="text-[10px] tracking-[2em] uppercase opacity-50 -mr-[2em]">Serving the local community</p>
+        </div>
+    </main>
+
+    <div id="page-layer" class="page-layer hide-scroll">
+        <div class="flex justify-between items-end mb-20">
+            <div>
+                <p id="page-subtitle" class="text-[9px] tracking-[5px] uppercase opacity-40 mb-2"></p>
+                <h2 id="page-title" class="text-5xl serif italic"></h2>
+            </div>
+            <div class="text-[10px] tracking-[5px] cursor-pointer opacity-40 hover:opacity-100 pb-2 border-b border-white/20" onclick="closePage()">[ ESC ] GO BACK</div>
+        </div>
+        <div id="page-content"></div>
+    </div>
+
+    <div class="nav-dock" id="dock">
+        <div class="dock-item" onclick="openInventory()">Our Cars</div>
+        <div class="dock-item" onclick="openAccessories()">Extras</div>
+        <div class="dock-item" onclick="openInquiry()">Ask Us</div>
+    </div>
+
+    <audio id="track1"><source src="enginesound.m4a" type="audio/mp4"></audio>
+    <audio id="track2" loop><source src="myeyes.m4a" type="audio/mp4"></audio>
+
+    <script>
+        // Data Arrays (Inventory, etc)
+        const cars = [
+            { name: "Porsche 911 Targa", price: "£160,000", cat: "Premium", engine: "3.0L", img: "porschetarga/targa1.jpg", gallery: ["porschetarga/targa2.jpg", "porschetarga/targa3.jpg"], specs: { topSpeed: "179 mph", zeroToSixty: "4.2s", power: "379 bhp" } },
+            { name: "Range Rover Autobiography", price: "£125,000", cat: "Premium", engine: "3.0L Hybrid", img: "rangerover/rangerover1.png", gallery: ["rangerover/interior.jpg", "rangerover/rear.jpg"], specs: { topSpeed: "140 mph", zeroToSixty: "5.7s", power: "434 bhp" } },
+            { name: "BMW 7 Series", price: "£87,000", cat: "Premium", engine: "3.0L", img: "bmw7series/bmw1.jpg", gallery: ["bmw7series/bmw2.jpg"], specs: { topSpeed: "155 mph", zeroToSixty: "5.4s", power: "295 bhp" } },
+            { name: "Mercedes A250e", price: "£24,995", cat: "Daily Drivers", engine: "2.0L Hybrid", img: "mercedeza250e/merc1.png", gallery: ["mercedeza250e/merc2.jpg"], specs: { topSpeed: "146 mph", zeroToSixty: "6.6s", power: "215 bhp" } },
+            { name: "Honda Civic Type R", price: "£9,995", cat: "Daily Drivers", engine: "2.0L VTEC", img: "hondar/hondar1.jpg", gallery: [], specs: {} },
+            { name: "VW Golf", price: "£5,995", cat: "Daily Drivers", engine: "1.2L Upwards", img: "vwgolf2014/vwgolf20141.jpg", gallery: [], specs: {} },
+            { name: "Audi A1", price: "£6,995", cat: "Daily Drivers", engine: "1.4L", img: "audi/audia12.png", gallery: [], specs: {} },
+            { name: "VW Polo", price: "£5,995", cat: "Daily Drivers", engine: "1.2L - 1.4L", img: "vwpolo/vwpolo1.png", gallery: [], specs: {} },
+            { name: "BMW 1 Series", price: "£5,245", cat: "Daily Drivers", engine: "1.5L-2L", img: "bmw1s/bmw1s1.jpg", gallery: [], specs: {} },
+            { name: "Nissan Micra", price: "£4,995", cat: "Daily Drivers", engine: "1.2L", img: "nissanmicra/nmicra.png", gallery: [], specs: {} },
+            { name: "Honda Jazz 2014", price: "£7,995", cat: "Daily Drivers", engine: "1.3L i-VTEC", img: "rhjazz14/rhjazz1.jpg", gallery: [], specs: {} }
+        ];
+
+        const accessories = [
+            { name: "Winter Tyres", price: "£1,200", desc: "Great for snow and ice", img: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=800" },
+            { name: "Carbon Trim Pack", price: "£3,450", desc: "Lightweight sport styling", img: "https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?auto=format&fit=crop&q=80&w=800" },
+            { name: "Car Cover", price: "£450", desc: "Keep your car clean indoors", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
+            { name: "Alloy Wheels", price: "£2,800", desc: "21-inch Matte Graphite finish", img: "https://images.unsplash.com/photo-1552651105-339327883726?auto=format&fit=crop&q=80&w=800" }
+        ];
+
+        // Functions for interactivity
+        function beginExperience() {
+            document.getElementById('track1').play().catch(e => console.log("Audio play blocked"));
+            document.getElementById('track1').onended = () => document.getElementById('track2').play();
+            gsap.to("#entrance", { opacity: 0, duration: 1.5, onComplete: () => {
+                document.getElementById('entrance').style.display = 'none';
+                gsap.to("#dock", { opacity: 1, y: 0, duration: 1 });
+                gsap.to("#floating-car", { opacity: 0.3, duration: 2 });
+            }});
+        }
+
+        // ... (Inventory/Gallery functions remain the same) ...
+        function openInventory() {
+            const content = document.getElementById('page-content');
+            document.getElementById('page-title').innerText = "Our Showroom";
+            document.getElementById('page-subtitle').innerText = "Current Stock";
+            content.innerHTML = `
+                <div class="category-tag">PREMIUM SELECTION</div>
+                <div class="grid md:grid-cols-3 gap-10 mb-24">
+                    ${cars.map((car, index) => car.cat === "Premium" ? renderItem(car, index) : '').join('')}
+                </div>
+                <div class="category-tag">DAILY DRIVERS</div>
+                <div class="grid md:grid-cols-3 gap-10 mb-24">
+                    ${cars.map((car, index) => car.cat === "Daily Drivers" ? renderItem(car, index) : '').join('')}
+                </div>
+            `;
+            document.getElementById('page-layer').classList.add('active');
+        }
+
+        function openCarDetails(index) {
+            const car = cars[index];
+            const content = document.getElementById('page-content');
+            document.getElementById('page-title').innerText = car.name;
+            document.getElementById('page-subtitle').innerText = "Car Information";
+            content.innerHTML = `
+                <div class="grid lg:grid-cols-2 gap-16 animate-in fade-in duration-1000">
+                    <div class="space-y-8">
+                        <div class="aspect-[16/9] overflow-hidden bg-zinc-900/50 flex items-center justify-center p-4">
+                            <img src="${car.img}" class="max-w-full max-h-full object-contain" onerror="this.src='comingsoon.jpg'">
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-between py-4">
+                        <div class="grid grid-cols-2 gap-y-10 border-b border-white/10 pb-12">
+                            <div><p class="text-[8px] tracking-[4px] opacity-30 mb-2">PRICE</p><p class="text-xl serif italic">${car.price}</p></div>
+                        </div>
+                        <div class="mt-12 space-y-4">
+                             <button onclick="openInquiry()" class="w-full py-6 border border-white/20 text-[10px] tracking-[1em] hover:bg-white hover:text-black transition-all duration-500">BOOK A VIEWING</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderItem(item, index, isAcc = false) {
+            const clickAction = isAcc ? '' : `onclick="openCarDetails(${index})"`;
+            return `
+                <div class="glass-card p-6 group cursor-pointer" ${clickAction}>
+                    <div class="aspect-square overflow-hidden mb-6 bg-zinc-900/50 relative flex items-center justify-center p-4">
+                        <img src="${item.img}" class="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" onerror="this.src='comingsoon.jpg'">
+                    </div>
+                    <h3 class="serif italic text-xl mb-1">${item.name}</h3>
+                    <div class="flex justify-between items-center opacity-40 text-[9px] tracking-widest uppercase">
+                        <span>${isAcc ? item.desc : item.engine}</span>
+                        <span class="text-white opacity-100">${item.price}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openAccessories() {
+            const content = document.getElementById('page-content');
+            document.getElementById('page-title').innerText = "Optional Extras";
+            document.getElementById('page-subtitle').innerText = "Accessories & Parts";
+            content.innerHTML = `<div class="grid md:grid-cols-4 gap-8">${accessories.map((acc, i) => renderItem(acc, i, true)).join('')}</div>`;
+            document.getElementById('page-layer').classList.add('active');
+        }
+
+        function openInquiry() {
+            document.getElementById('page-title').innerText = "Contact Us";
+            document.getElementById('page-layer').classList.add('active');
+            document.getElementById('page-content').innerHTML = `<p class="text-center opacity-50">Inquiry form logic here...</p>`;
+        }
+
+        function closePage() { document.getElementById('page-layer').classList.remove('active'); }
+
+        // CANVAS PARTICLES UPDATED
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let pts = [];
+        
+        function init() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            pts = Array(80).fill().map(() => ({ 
+                x: Math.random()*canvas.width, 
+                y: Math.random()*canvas.height, 
+                s: Math.random()*1.2,
+                // UPDATED: Added subtle drift speed
+                v: 0.2 + Math.random() * 0.5 
+            }));
+        }
+
+        function draw() {
+            ctx.clearRect(0,0,canvas.width,canvas.height); 
+            
+            // UPDATED: Particle Color changed to a warm, premium Champagne/Gold 
+            // This suits high-end automotive backgrounds better than pure white.
+            ctx.fillStyle = "rgba(255, 220, 180, 0.7)"; 
+            
+            pts.forEach(p => { 
+                p.y -= p.v; 
+                if(p.y < 0) p.y = canvas.height; 
+                
+                ctx.beginPath(); 
+                ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); 
+                
+                // Add a slight glow effect to particles
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = "rgba(255, 200, 100, 0.5)";
+                
+                ctx.fill(); 
+            });
+            requestAnimationFrame(draw);
+        }
+        init(); draw();
+
+        const carImg = document.getElementById('floating-car');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(carImg, { x: e.clientX - 80, y: e.clientY - 40, duration: 0.8, ease: "power2.out" });
+        });
+
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB', { hour12: false });
+        }, 1000);
+
+        window.addEventListener('resize', init);
+    </script>
+</body>
+</html>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
