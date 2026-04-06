@@ -79,6 +79,10 @@
             font-size: 10px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
             border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 40px;
         }
+
+        /* Custom Scrollbar for the gallery */
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body>
@@ -129,18 +133,39 @@
     <audio id="track2" loop><source src="myeyes.m4a" type="audio/mp4"></audio>
 
     <script>
+        // Enhanced Data Structure with Galleries
         const cars = [
-            { name: "Porsche 911 Targa", price: "From £160,000", cat: "Elite", engine: "3.0L", img: "porschetarga/targa1.jpg" },
-            { name: "Range Rover Autobiography", price: "From £125,000", cat: "Elite", engine: "3.0L Hybrid", img: "rangerover/rangerover1.png" },
-            { name: "BMW 7 Series", price: "£87,000", cat: "Elite", engine: "3.0L", img: "bmw7series/bmw1.jpg" },
-            { name: "Mercedes A250e", price: "£24,995", cat: "Performance", engine: "2.0L Hybrid", img: "mercedeza250e/merc1.png" },
-            { name: "Honda Civic Type R", price: "From £9,995", cat: "Performance", engine: "2.0L VTEC", img: "hondar/hondar1.jpg" },
-            { name: "VW Golf", price: "£5,995", cat: "Performance", engine: "1.2L Upwards", img: "vwgolf2014/vwgolf20141.jpg" },
-            { name: "Audi A1", price: "From £6,995", cat: "Performance", engine: "1.4L", img: "audi/audia12.png" },
-            { name: "VW Polo", price: "From £5,995", cat: "Performance", engine: "1.2L - 1.4L", img: "vwpolo/vwpolo1.png" },
-            { name: "BMW 1 Series", price: "£5,245", cat: "Performance", engine: "1.5L-2L", img: "bmw1s/bmw1s1.jpg" },
-            { name: "Nissan Micra", price: "£4,995", cat: "Performance", engine: "1.2L", img: "nissanmicra/nmicra.png" },
-            { name: "Honda Jazz 2014", price: "£7,995", cat: "Performance", engine: "1.3L i-VTEC", img: "rhjazz14/rhjazz1.jpg" }
+            { 
+                name: "Porsche 911 Targa", price: "From £160,000", cat: "Elite", engine: "3.0L", 
+                img: "porschetarga/targa1.jpg",
+                gallery: ["porschetarga/targa2.jpg", "porschetarga/targa3.jpg"],
+                specs: { topSpeed: "179 mph", zeroToSixty: "4.2s", power: "379 bhp" }
+            },
+            { 
+                name: "Range Rover Autobiography", price: "From £125,000", cat: "Elite", engine: "3.0L Hybrid", 
+                img: "rangerover/rangerover1.png",
+                gallery: ["rangerover/interior.jpg", "rangerover/rear.jpg"],
+                specs: { topSpeed: "140 mph", zeroToSixty: "5.7s", power: "434 bhp" }
+            },
+            { 
+                name: "BMW 7 Series", price: "£87,000", cat: "Elite", engine: "3.0L", 
+                img: "bmw7series/bmw1.jpg",
+                gallery: ["bmw7series/bmw2.jpg"],
+                specs: { topSpeed: "155 mph", zeroToSixty: "5.4s", power: "295 bhp" }
+            },
+            { 
+                name: "Mercedes A250e", price: "£24,995", cat: "Performance", engine: "2.0L Hybrid", 
+                img: "mercedeza250e/merc1.png",
+                gallery: ["mercedeza250e/merc2.jpg"],
+                specs: { topSpeed: "146 mph", zeroToSixty: "6.6s", power: "215 bhp" }
+            },
+            { name: "Honda Civic Type R", price: "From £9,995", cat: "Performance", engine: "2.0L VTEC", img: "hondar/hondar1.jpg", gallery: [], specs: {} },
+            { name: "VW Golf", price: "£5,995", cat: "Performance", engine: "1.2L Upwards", img: "vwgolf2014/vwgolf20141.jpg", gallery: [], specs: {} },
+            { name: "Audi A1", price: "From £6,995", cat: "Performance", engine: "1.4L", img: "audi/audia12.png", gallery: [], specs: {} },
+            { name: "VW Polo", price: "From £5,995", cat: "Performance", engine: "1.2L - 1.4L", img: "vwpolo/vwpolo1.png", gallery: [], specs: {} },
+            { name: "BMW 1 Series", price: "£5,245", cat: "Performance", engine: "1.5L-2L", img: "bmw1s/bmw1s1.jpg", gallery: [], specs: {} },
+            { name: "Nissan Micra", price: "£4,995", cat: "Performance", engine: "1.2L", img: "nissanmicra/nmicra.png", gallery: [], specs: {} },
+            { name: "Honda Jazz 2014", price: "£7,995", cat: "Performance", engine: "1.3L i-VTEC", img: "rhjazz14/rhjazz1.jpg", gallery: [], specs: {} }
         ];
 
         const accessories = [
@@ -151,8 +176,7 @@
         ];
 
         function beginExperience() {
-            // SOUND IS BACK ON
-            document.getElementById('track1').play();
+            document.getElementById('track1').play().catch(e => console.log("Audio play blocked"));
             document.getElementById('track1').onended = () => document.getElementById('track2').play();
 
             gsap.to("#entrance", { opacity: 0, duration: 1.5, onComplete: () => {
@@ -166,33 +190,79 @@
             const content = document.getElementById('page-content');
             document.getElementById('page-title').innerText = "The Collection";
             document.getElementById('page-subtitle').innerText = "Inventory Range";
-            const elite = cars.filter(c => c.cat === "Elite");
-            const normal = cars.filter(c => c.cat === "Performance");
+            
+            // Note: passing original index to the render function
             content.innerHTML = `
                 <div class="category-tag">THE ELITE SELECTION</div>
-                <div class="grid md:grid-cols-3 gap-10 mb-24">${elite.map(car => renderItem(car)).join('')}</div>
+                <div class="grid md:grid-cols-3 gap-10 mb-24">
+                    ${cars.map((car, index) => car.cat === "Elite" ? renderItem(car, index) : '').join('')}
+                </div>
                 <div class="category-tag">THE PERFORMANCE RANGE</div>
-                <div class="grid md:grid-cols-3 gap-10">${normal.map(car => renderItem(car)).join('')}</div>
-            `;
-            document.getElementById('page-layer').classList.add('active');
-        }
-
-        function openAccessories() {
-            const content = document.getElementById('page-content');
-            document.getElementById('page-title').innerText = "The Vault";
-            document.getElementById('page-subtitle').innerText = "Bespoke Equipment";
-            content.innerHTML = `
-                <div class="category-tag">CURATED ACCESSORIES</div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    ${accessories.map(acc => renderItem(acc, true)).join('')}
+                <div class="grid md:grid-cols-3 gap-10">
+                    ${cars.map((car, index) => car.cat === "Performance" ? renderItem(car, index) : '').join('')}
                 </div>
             `;
             document.getElementById('page-layer').classList.add('active');
         }
 
-        function renderItem(item, isAcc = false) {
+        // New Detail Page Function
+        function openCarDetails(index) {
+            const car = cars[index];
+            const content = document.getElementById('page-content');
+            document.getElementById('page-title').innerText = car.name;
+            document.getElementById('page-subtitle').innerText = car.cat + " Specification";
+
+            content.innerHTML = `
+                <div class="grid lg:grid-cols-2 gap-16 animate-in fade-in duration-1000">
+                    <div class="space-y-8">
+                        <div class="aspect-[16/9] overflow-hidden bg-white/5">
+                            <img src="${car.img}" class="w-full h-full object-cover" onerror="this.src='comingsoon.jpg'">
+                        </div>
+                        <div class="flex gap-4 overflow-x-auto pb-4 hide-scroll">
+                            ${car.gallery ? car.gallery.map(img => `
+                                <div class="min-w-[200px] aspect-video bg-white/5">
+                                    <img src="${img}" class="w-full h-full object-cover opacity-60 hover:opacity-100 transition duration-500" onerror="this.src='comingsoon.jpg'">
+                                </div>
+                            `).join('') : ''}
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col justify-between py-4">
+                        <div>
+                            <div class="category-tag mb-8">TECHNICAL OVERVIEW</div>
+                            <div class="grid grid-cols-2 gap-y-10 border-b border-white/10 pb-12">
+                                <div>
+                                    <p class="text-[8px] tracking-[4px] opacity-30 mb-2">ENGINE</p>
+                                    <p class="text-xl serif italic">${car.engine}</p>
+                                </div>
+                                <div>
+                                    <p class="text-[8px] tracking-[4px] opacity-30 mb-2">OUTPUT</p>
+                                    <p class="text-xl serif italic">${car.specs.power || 'TBA'}</p>
+                                </div>
+                                <div>
+                                    <p class="text-[8px] tracking-[4px] opacity-30 mb-2">0-60 MPH</p>
+                                    <p class="text-xl serif italic">${car.specs.zeroToSixty || 'TBA'}</p>
+                                </div>
+                                <div>
+                                    <p class="text-[8px] tracking-[4px] opacity-30 mb-2">VALUATION</p>
+                                    <p class="text-xl serif italic">${car.price}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-12 space-y-4">
+                             <button onclick="openInquiry()" class="w-full py-6 border border-white/20 text-[10px] tracking-[1em] hover:bg-white hover:text-black transition-all duration-500">REQUEST DOSSIER</button>
+                             <button onclick="openInventory()" class="w-full py-4 text-[8px] tracking-[0.5em] opacity-40 hover:opacity-100 transition">BACK TO COLLECTION</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderItem(item, index, isAcc = false) {
+            const clickAction = isAcc ? '' : `onclick="openCarDetails(${index})"`;
             return `
-                <div class="glass-card p-6 group cursor-pointer">
+                <div class="glass-card p-6 group cursor-pointer" ${clickAction}>
                     <div class="aspect-square overflow-hidden mb-6 bg-white/5 relative">
                         <img src="${item.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" onerror="this.src='comingsoon.jpg'">
                     </div>
@@ -203,6 +273,19 @@
                     </div>
                 </div>
             `;
+        }
+
+        function openAccessories() {
+            const content = document.getElementById('page-content');
+            document.getElementById('page-title').innerText = "The Vault";
+            document.getElementById('page-subtitle').innerText = "Bespoke Equipment";
+            content.innerHTML = `
+                <div class="category-tag">CURATED ACCESSORIES</div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    ${accessories.map((acc, i) => renderItem(acc, i, true)).join('')}
+                </div>
+            `;
+            document.getElementById('page-layer').classList.add('active');
         }
 
         function openInquiry() {
@@ -224,6 +307,7 @@
         function closePage() { document.getElementById('page-layer').classList.remove('active'); }
         document.addEventListener('keydown', (e) => { if (e.key === "Escape") closePage(); });
 
+        // Particles
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         let pts = [];
@@ -246,6 +330,8 @@
         setInterval(() => {
             document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB', { hour12: false });
         }, 1000);
+
+        window.addEventListener('resize', init);
     </script>
 </body>
 </html>
