@@ -25,7 +25,6 @@
 
         h1, h2, h3, .serif { font-family: 'Bodoni Moda', serif; }
 
-        /* Background Effects */
         #canvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.3; }
 
         #floating-car {
@@ -38,7 +37,6 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        /* Full Screen Overlay System */
         .page-layer {
             position: fixed; inset: 0; z-index: 50; 
             background: rgba(5, 5, 5, 0.98);
@@ -49,7 +47,6 @@
         }
         .page-layer.active { display: block; clip-path: circle(150% at 50% 50%); }
 
-        /* Navigation Dock */
         .nav-dock {
             position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
             z-index: 1000; background: rgba(255,255,255,0.03);
@@ -119,7 +116,6 @@
             </div>
             <div class="text-[10px] tracking-[5px] cursor-pointer opacity-40 hover:opacity-100 pb-2 border-b border-white/20" onclick="closePage()">[ ESC ] CLOSE</div>
         </div>
-
         <div id="page-content"></div>
     </div>
 
@@ -148,16 +144,16 @@
         ];
 
         const accessories = [
-            { name: "Winter Performance Kit", price: "£1,200", desc: "High-grip alpine tyres & thermal covers", img: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=800" },
-            { name: "Carbon Fiber Aero", price: "£3,450", desc: "Lightweight mirror caps and rear diffuser", img: "https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?auto=format&fit=crop&q=80&w=800" },
-            { name: "Monacan Signature Cover", price: "£450", desc: "Satin-weave indoor protection", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
-            { name: "Forged Alloy Wheels", price: "£2,800", desc: "21-inch Matte Obsidian finish", img: "https://images.unsplash.com/photo-1552651105-339327883726?auto=format&fit=crop&q=80&w=800" }
+            { name: "Winter Traction Kit", price: "£1,200", desc: "Alpine-rated performance tyres", img: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=800" },
+            { name: "Carbon Aero Pack", price: "£3,450", desc: "Ultra-lightweight aerodynamic trim", img: "https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?auto=format&fit=crop&q=80&w=800" },
+            { name: "Monacan Indoor Cover", price: "£450", desc: "Satin protection for the collection", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
+            { name: "Forged Orbit Wheels", price: "£2,800", desc: "21-inch Matte Graphite alloys", img: "https://images.unsplash.com/photo-1552651105-339327883726?auto=format&fit=crop&q=80&w=800" }
         ];
 
         function beginExperience() {
-            // Audio commented out for local preview safety if files missing
-            // document.getElementById('track1').play();
-            // document.getElementById('track1').onended = () => document.getElementById('track2').play();
+            // SOUND IS BACK ON
+            document.getElementById('track1').play();
+            document.getElementById('track1').onended = () => document.getElementById('track2').play();
 
             gsap.to("#entrance", { opacity: 0, duration: 1.5, onComplete: () => {
                 document.getElementById('entrance').style.display = 'none';
@@ -170,19 +166,13 @@
             const content = document.getElementById('page-content');
             document.getElementById('page-title').innerText = "The Collection";
             document.getElementById('page-subtitle').innerText = "Inventory Range";
-
             const elite = cars.filter(c => c.cat === "Elite");
             const normal = cars.filter(c => c.cat === "Performance");
-
             content.innerHTML = `
                 <div class="category-tag">THE ELITE SELECTION</div>
-                <div class="grid md:grid-cols-3 gap-10 mb-24">
-                    ${elite.map(car => renderItem(car)).join('')}
-                </div>
+                <div class="grid md:grid-cols-3 gap-10 mb-24">${elite.map(car => renderItem(car)).join('')}</div>
                 <div class="category-tag">THE PERFORMANCE RANGE</div>
-                <div class="grid md:grid-cols-3 gap-10">
-                    ${normal.map(car => renderItem(car)).join('')}
-                </div>
+                <div class="grid md:grid-cols-3 gap-10">${normal.map(car => renderItem(car)).join('')}</div>
             `;
             document.getElementById('page-layer').classList.add('active');
         }
@@ -191,9 +181,8 @@
             const content = document.getElementById('page-content');
             document.getElementById('page-title').innerText = "The Vault";
             document.getElementById('page-subtitle').innerText = "Bespoke Equipment";
-
             content.innerHTML = `
-                <div class="category-tag">ESSENTIAL ACCESSORIES</div>
+                <div class="category-tag">CURATED ACCESSORIES</div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     ${accessories.map(acc => renderItem(acc, true)).join('')}
                 </div>
@@ -205,10 +194,7 @@
             return `
                 <div class="glass-card p-6 group cursor-pointer">
                     <div class="aspect-square overflow-hidden mb-6 bg-white/5 relative">
-                        <img src="${item.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" onerror="this.src='https://via.placeholder.com/400x400/111/fff?text=IMAGE+PENDING'">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <span class="text-[8px] tracking-[4px] border border-white/40 px-4 py-2">DETAILS</span>
-                        </div>
+                        <img src="${item.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" onerror="this.src='comingsoon.jpg'">
                     </div>
                     <h3 class="serif italic text-xl mb-1">${item.name}</h3>
                     <div class="flex justify-between items-center opacity-40 text-[9px] tracking-widest uppercase">
@@ -226,7 +212,7 @@
                 <div class="max-w-4xl mx-auto">
                     <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="grid md:grid-cols-2 gap-6">
                         <input type="text" name="Name" placeholder="FULL NAME" required class="form-input">
-                        <input type="text" name="Vehicle" placeholder="VEHICLE OR ACCESSORY" class="form-input">
+                        <input type="text" name="Interest" placeholder="VEHICLE OR ACCESSORY" class="form-input">
                         <textarea name="Message" placeholder="MESSAGE" class="form-input md:col-span-2" rows="5"></textarea>
                         <button type="submit" class="md:col-span-2 bg-white text-black py-6 text-[10px] tracking-[1em] font-bold hover:bg-zinc-200 transition">SEND INQUIRY</button>
                     </form>
@@ -235,15 +221,9 @@
             document.getElementById('page-layer').classList.add('active');
         }
 
-        function closePage() {
-            document.getElementById('page-layer').classList.remove('active');
-        }
+        function closePage() { document.getElementById('page-layer').classList.remove('active'); }
+        document.addEventListener('keydown', (e) => { if (e.key === "Escape") closePage(); });
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") closePage();
-        });
-
-        // Background Particles
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         let pts = [];
