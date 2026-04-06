@@ -290,12 +290,28 @@
             document.getElementById('page-subtitle').innerText = "Get in touch";
             document.getElementById('page-content').innerHTML = `
                 <div class="max-w-4xl mx-auto">
-                    <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="grid md:grid-cols-2 gap-6">
+                    <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="grid md:grid-cols-2 gap-6 mb-16">
                         <input type="text" name="Name" placeholder="YOUR NAME" required class="form-input">
                         <input type="text" name="Interest" placeholder="WHICH CAR ARE YOU INTERESTED IN?" class="form-input">
                         <textarea name="Message" placeholder="HOW CAN WE HELP?" class="form-input md:col-span-2" rows="5"></textarea>
                         <button type="submit" class="md:col-span-2 bg-white text-black py-6 text-[10px] tracking-[1em] font-bold hover:bg-zinc-200 transition">SEND MESSAGE</button>
                     </form>
+
+                    <div class="category-tag">Direct Channels</div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <a href="https://wa.me/447480446676" target="_blank" class="flex items-center justify-center border border-white/10 py-8 group hover:bg-white/5 transition-all duration-500">
+                            <div class="text-center">
+                                <p class="text-[8px] tracking-[4px] opacity-30 mb-2 group-hover:opacity-100 transition">WHATSAPP</p>
+                                <p class="serif italic text-xl">Chat with Sales</p>
+                            </div>
+                        </a>
+                        <a href="tel:+447480446676" class="flex items-center justify-center border border-white/10 py-8 group hover:bg-white/5 transition-all duration-500">
+                            <div class="text-center">
+                                <p class="text-[8px] tracking-[4px] opacity-30 mb-2 group-hover:opacity-100 transition">DIRECT LINE</p>
+                                <p class="serif italic text-xl">Call the Showroom</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             `;
             document.getElementById('page-layer').classList.add('active');
