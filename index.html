@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MONACAN PRESTIGE | Dual Collection</title>
+    <title>MONACAN MOTORS | Local Car Sales</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -80,7 +80,6 @@
             border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 40px;
         }
 
-        /* Custom Scrollbar for the gallery */
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -91,24 +90,24 @@
     <canvas id="canvas"></canvas>
 
     <div id="entrance">
-        <h1 class="text-[10px] tracking-[2.5em] mb-12 opacity-30 uppercase text-white -mr-[2.5em]">Establishing Connection</h1>
+        <h1 class="text-[10px] tracking-[2.5em] mb-12 opacity-30 uppercase text-white -mr-[2.5em]">Loading Our Cars</h1>
         <button onclick="beginExperience()" class="group relative px-16 py-7 border border-white/10 overflow-hidden transition-all duration-700">
-            <span class="relative z-10 text-[10px] tracking-[1em] uppercase text-white group-hover:text-black transition-colors">Access Collection</span>
+            <span class="relative z-10 text-[10px] tracking-[1em] uppercase text-white group-hover:text-black transition-colors">Enter Showroom</span>
             <div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
         </button>
     </div>
 
     <nav class="fixed top-0 w-full px-12 py-10 flex justify-between items-center z-[100] mix-blend-difference">
-        <div class="text-2xl serif tracking-[0.2em] uppercase">Monacan Prestige</div>
+        <div class="text-2xl serif tracking-[0.2em] uppercase">Monacan Motors</div>
         <div id="clock" class="text-[9px] tracking-[5px] uppercase opacity-50">00:00:00</div>
     </nav>
 
     <main id="hero" class="h-screen flex flex-col justify-center items-center relative text-center">
         <div class="relative z-10 px-6">
             <h1 class="text-6xl md:text-9xl font-bold tracking-tighter italic uppercase mb-6 leading-none" id="hero-title">
-                The Master<br><span class="text-transparent" style="-webkit-text-stroke: 1px white;">Collection.</span>
+                Reliable Cars.<br><span class="text-transparent" style="-webkit-text-stroke: 1px white;">Fair Prices.</span>
             </h1>
-            <p class="text-[10px] tracking-[2em] uppercase opacity-30 -mr-[2em]">Engineering the Sublime</p>
+            <p class="text-[10px] tracking-[2em] uppercase opacity-30 -mr-[2em]">Serving the local community</p>
         </div>
     </main>
 
@@ -118,61 +117,60 @@
                 <p id="page-subtitle" class="text-[9px] tracking-[5px] uppercase opacity-40 mb-2"></p>
                 <h2 id="page-title" class="text-5xl serif italic"></h2>
             </div>
-            <div class="text-[10px] tracking-[5px] cursor-pointer opacity-40 hover:opacity-100 pb-2 border-b border-white/20" onclick="closePage()">[ ESC ] CLOSE</div>
+            <div class="text-[10px] tracking-[5px] cursor-pointer opacity-40 hover:opacity-100 pb-2 border-b border-white/20" onclick="closePage()">[ ESC ] GO BACK</div>
         </div>
         <div id="page-content"></div>
     </div>
 
     <div class="nav-dock" id="dock">
-        <div class="dock-item" onclick="openInventory()">The Stable</div>
-        <div class="dock-item" onclick="openAccessories()">The Vault</div>
-        <div class="dock-item" onclick="openInquiry()">Inquiry</div>
+        <div class="dock-item" onclick="openInventory()">Our Cars</div>
+        <div class="dock-item" onclick="openAccessories()">Extras</div>
+        <div class="dock-item" onclick="openInquiry()">Ask Us</div>
     </div>
 
     <audio id="track1"><source src="enginesound.m4a" type="audio/mp4"></audio>
     <audio id="track2" loop><source src="myeyes.m4a" type="audio/mp4"></audio>
 
     <script>
-        // Enhanced Data Structure with Galleries
         const cars = [
             { 
-                name: "Porsche 911 Targa", price: "From £160,000", cat: "Elite", engine: "3.0L", 
+                name: "Porsche 911 Targa", price: "£160,000", cat: "Premium", engine: "3.0L", 
                 img: "porschetarga/targa1.jpg",
                 gallery: ["porschetarga/targa2.jpg", "porschetarga/targa3.jpg"],
                 specs: { topSpeed: "179 mph", zeroToSixty: "4.2s", power: "379 bhp" }
             },
             { 
-                name: "Range Rover Autobiography", price: "From £125,000", cat: "Elite", engine: "3.0L Hybrid", 
+                name: "Range Rover Autobiography", price: "£125,000", cat: "Premium", engine: "3.0L Hybrid", 
                 img: "rangerover/rangerover1.png",
                 gallery: ["rangerover/interior.jpg", "rangerover/rear.jpg"],
                 specs: { topSpeed: "140 mph", zeroToSixty: "5.7s", power: "434 bhp" }
             },
             { 
-                name: "BMW 7 Series", price: "£87,000", cat: "Elite", engine: "3.0L", 
+                name: "BMW 7 Series", price: "£87,000", cat: "Premium", engine: "3.0L", 
                 img: "bmw7series/bmw1.jpg",
                 gallery: ["bmw7series/bmw2.jpg"],
                 specs: { topSpeed: "155 mph", zeroToSixty: "5.4s", power: "295 bhp" }
             },
             { 
-                name: "Mercedes A250e", price: "£24,995", cat: "Performance", engine: "2.0L Hybrid", 
+                name: "Mercedes A250e", price: "£24,995", cat: "Daily Drivers", engine: "2.0L Hybrid", 
                 img: "mercedeza250e/merc1.png",
                 gallery: ["mercedeza250e/merc2.jpg"],
                 specs: { topSpeed: "146 mph", zeroToSixty: "6.6s", power: "215 bhp" }
             },
-            { name: "Honda Civic Type R", price: "From £9,995", cat: "Performance", engine: "2.0L VTEC", img: "hondar/hondar1.jpg", gallery: [], specs: {} },
-            { name: "VW Golf", price: "£5,995", cat: "Performance", engine: "1.2L Upwards", img: "vwgolf2014/vwgolf20141.jpg", gallery: [], specs: {} },
-            { name: "Audi A1", price: "From £6,995", cat: "Performance", engine: "1.4L", img: "audi/audia12.png", gallery: [], specs: {} },
-            { name: "VW Polo", price: "From £5,995", cat: "Performance", engine: "1.2L - 1.4L", img: "vwpolo/vwpolo1.png", gallery: [], specs: {} },
-            { name: "BMW 1 Series", price: "£5,245", cat: "Performance", engine: "1.5L-2L", img: "bmw1s/bmw1s1.jpg", gallery: [], specs: {} },
-            { name: "Nissan Micra", price: "£4,995", cat: "Performance", engine: "1.2L", img: "nissanmicra/nmicra.png", gallery: [], specs: {} },
-            { name: "Honda Jazz 2014", price: "£7,995", cat: "Performance", engine: "1.3L i-VTEC", img: "rhjazz14/rhjazz1.jpg", gallery: [], specs: {} }
+            { name: "Honda Civic Type R", price: "£9,995", cat: "Daily Drivers", engine: "2.0L VTEC", img: "hondar/hondar1.jpg", gallery: [], specs: {} },
+            { name: "VW Golf", price: "£5,995", cat: "Daily Drivers", engine: "1.2L Upwards", img: "vwgolf2014/vwgolf20141.jpg", gallery: [], specs: {} },
+            { name: "Audi A1", price: "£6,995", cat: "Daily Drivers", engine: "1.4L", img: "audi/audia12.png", gallery: [], specs: {} },
+            { name: "VW Polo", price: "£5,995", cat: "Daily Drivers", engine: "1.2L - 1.4L", img: "vwpolo/vwpolo1.png", gallery: [], specs: {} },
+            { name: "BMW 1 Series", price: "£5,245", cat: "Daily Drivers", engine: "1.5L-2L", img: "bmw1s/bmw1s1.jpg", gallery: [], specs: {} },
+            { name: "Nissan Micra", price: "£4,995", cat: "Daily Drivers", engine: "1.2L", img: "nissanmicra/nmicra.png", gallery: [], specs: {} },
+            { name: "Honda Jazz 2014", price: "£7,995", cat: "Daily Drivers", engine: "1.3L i-VTEC", img: "rhjazz14/rhjazz1.jpg", gallery: [], specs: {} }
         ];
 
         const accessories = [
-            { name: "Winter Traction Kit", price: "£1,200", desc: "Alpine-rated performance tyres", img: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=800" },
-            { name: "Carbon Aero Pack", price: "£3,450", desc: "Ultra-lightweight aerodynamic trim", img: "https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?auto=format&fit=crop&q=80&w=800" },
-            { name: "Monacan Indoor Cover", price: "£450", desc: "Satin protection for the collection", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
-            { name: "Forged Orbit Wheels", price: "£2,800", desc: "21-inch Matte Graphite alloys", img: "https://images.unsplash.com/photo-1552651105-339327883726?auto=format&fit=crop&q=80&w=800" }
+            { name: "Winter Tyres", price: "£1,200", desc: "Great for snow and ice", img: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=800" },
+            { name: "Carbon Trim Pack", price: "£3,450", desc: "Lightweight sport styling", img: "https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?auto=format&fit=crop&q=80&w=800" },
+            { name: "Car Cover", price: "£450", desc: "Keep your car clean indoors", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
+            { name: "Alloy Wheels", price: "£2,800", desc: "21-inch Matte Graphite finish", img: "https://images.unsplash.com/photo-1552651105-339327883726?auto=format&fit=crop&q=80&w=800" }
         ];
 
         function beginExperience() {
@@ -188,29 +186,27 @@
 
         function openInventory() {
             const content = document.getElementById('page-content');
-            document.getElementById('page-title').innerText = "The Collection";
-            document.getElementById('page-subtitle').innerText = "Inventory Range";
+            document.getElementById('page-title').innerText = "Our Showroom";
+            document.getElementById('page-subtitle').innerText = "Current Stock";
             
-            // Note: passing original index to the render function
             content.innerHTML = `
-                <div class="category-tag">THE ELITE SELECTION</div>
+                <div class="category-tag">PREMIUM SELECTION</div>
                 <div class="grid md:grid-cols-3 gap-10 mb-24">
-                    ${cars.map((car, index) => car.cat === "Elite" ? renderItem(car, index) : '').join('')}
+                    ${cars.map((car, index) => car.cat === "Premium" ? renderItem(car, index) : '').join('')}
                 </div>
-                <div class="category-tag">THE PERFORMANCE RANGE</div>
+                <div class="category-tag">DAILY DRIVERS</div>
                 <div class="grid md:grid-cols-3 gap-10">
-                    ${cars.map((car, index) => car.cat === "Performance" ? renderItem(car, index) : '').join('')}
+                    ${cars.map((car, index) => car.cat === "Daily Drivers" ? renderItem(car, index) : '').join('')}
                 </div>
             `;
             document.getElementById('page-layer').classList.add('active');
         }
 
-        // New Detail Page Function
         function openCarDetails(index) {
             const car = cars[index];
             const content = document.getElementById('page-content');
             document.getElementById('page-title').innerText = car.name;
-            document.getElementById('page-subtitle').innerText = car.cat + " Specification";
+            document.getElementById('page-subtitle').innerText = "Car Information";
 
             content.innerHTML = `
                 <div class="grid lg:grid-cols-2 gap-16 animate-in fade-in duration-1000">
@@ -229,30 +225,30 @@
 
                     <div class="flex flex-col justify-between py-4">
                         <div>
-                            <div class="category-tag mb-8">TECHNICAL OVERVIEW</div>
+                            <div class="category-tag mb-8">CAR SPECS</div>
                             <div class="grid grid-cols-2 gap-y-10 border-b border-white/10 pb-12">
                                 <div>
-                                    <p class="text-[8px] tracking-[4px] opacity-30 mb-2">ENGINE</p>
+                                    <p class="text-[8px] tracking-[4px] opacity-30 mb-2">ENGINE SIZE</p>
                                     <p class="text-xl serif italic">${car.engine}</p>
                                 </div>
                                 <div>
-                                    <p class="text-[8px] tracking-[4px] opacity-30 mb-2">OUTPUT</p>
-                                    <p class="text-xl serif italic">${car.specs.power || 'TBA'}</p>
+                                    <p class="text-[8px] tracking-[4px] opacity-30 mb-2">POWER</p>
+                                    <p class="text-xl serif italic">${car.specs.power || 'Check with us'}</p>
                                 </div>
                                 <div>
                                     <p class="text-[8px] tracking-[4px] opacity-30 mb-2">0-60 MPH</p>
-                                    <p class="text-xl serif italic">${car.specs.zeroToSixty || 'TBA'}</p>
+                                    <p class="text-xl serif italic">${car.specs.zeroToSixty || 'N/A'}</p>
                                 </div>
                                 <div>
-                                    <p class="text-[8px] tracking-[4px] opacity-30 mb-2">VALUATION</p>
+                                    <p class="text-[8px] tracking-[4px] opacity-30 mb-2">PRICE</p>
                                     <p class="text-xl serif italic">${car.price}</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-12 space-y-4">
-                             <button onclick="openInquiry()" class="w-full py-6 border border-white/20 text-[10px] tracking-[1em] hover:bg-white hover:text-black transition-all duration-500">REQUEST DOSSIER</button>
-                             <button onclick="openInventory()" class="w-full py-4 text-[8px] tracking-[0.5em] opacity-40 hover:opacity-100 transition">BACK TO COLLECTION</button>
+                             <button onclick="openInquiry()" class="w-full py-6 border border-white/20 text-[10px] tracking-[1em] hover:bg-white hover:text-black transition-all duration-500">BOOK A VIEWING</button>
+                             <button onclick="openInventory()" class="w-full py-4 text-[8px] tracking-[0.5em] opacity-40 hover:opacity-100 transition">BACK TO ALL CARS</button>
                         </div>
                     </div>
                 </div>
@@ -277,10 +273,10 @@
 
         function openAccessories() {
             const content = document.getElementById('page-content');
-            document.getElementById('page-title').innerText = "The Vault";
-            document.getElementById('page-subtitle').innerText = "Bespoke Equipment";
+            document.getElementById('page-title').innerText = "Optional Extras";
+            document.getElementById('page-subtitle').innerText = "Accessories & Parts";
             content.innerHTML = `
-                <div class="category-tag">CURATED ACCESSORIES</div>
+                <div class="category-tag">FOR YOUR CAR</div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     ${accessories.map((acc, i) => renderItem(acc, i, true)).join('')}
                 </div>
@@ -289,15 +285,15 @@
         }
 
         function openInquiry() {
-            document.getElementById('page-title').innerText = "Direct Channel";
-            document.getElementById('page-subtitle').innerText = "Start Your Journey";
+            document.getElementById('page-title').innerText = "Contact Us";
+            document.getElementById('page-subtitle').innerText = "Get in touch";
             document.getElementById('page-content').innerHTML = `
                 <div class="max-w-4xl mx-auto">
                     <form action="mailto:busyshazza@gmail.com" method="post" enctype="text/plain" class="grid md:grid-cols-2 gap-6">
-                        <input type="text" name="Name" placeholder="FULL NAME" required class="form-input">
-                        <input type="text" name="Interest" placeholder="VEHICLE OR ACCESSORY" class="form-input">
-                        <textarea name="Message" placeholder="MESSAGE" class="form-input md:col-span-2" rows="5"></textarea>
-                        <button type="submit" class="md:col-span-2 bg-white text-black py-6 text-[10px] tracking-[1em] font-bold hover:bg-zinc-200 transition">SEND INQUIRY</button>
+                        <input type="text" name="Name" placeholder="YOUR NAME" required class="form-input">
+                        <input type="text" name="Interest" placeholder="WHICH CAR ARE YOU INTERESTED IN?" class="form-input">
+                        <textarea name="Message" placeholder="HOW CAN WE HELP?" class="form-input md:col-span-2" rows="5"></textarea>
+                        <button type="submit" class="md:col-span-2 bg-white text-black py-6 text-[10px] tracking-[1em] font-bold hover:bg-zinc-200 transition">SEND MESSAGE</button>
                     </form>
                 </div>
             `;
@@ -307,7 +303,6 @@
         function closePage() { document.getElementById('page-layer').classList.remove('active'); }
         document.addEventListener('keydown', (e) => { if (e.key === "Escape") closePage(); });
 
-        // Particles
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         let pts = [];
